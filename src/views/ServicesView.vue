@@ -140,9 +140,13 @@
           </button>
         </div>
 
-        <router-link to="/services/new" class="btn btn-primary btn-sm add-service-btn">
+        <router-link v-if="authStore.isCraftsman" to="/services/new" class="btn btn-primary btn-sm add-service-btn">
           <Plus :size="14" />
           <span>Xizmat Qo'shish</span>
+        </router-link>
+        <router-link v-else to="/jobs/new" class="btn btn-primary btn-sm add-service-btn">
+          <Plus :size="14" />
+          <span>Ish E'loni Joylash</span>
         </router-link>
       </div>
 
