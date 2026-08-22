@@ -11,7 +11,7 @@
           <div>
             <h3>Mening Hamyonim</h3>
             <span class="head-sub">
-              {{ authStore.isCraftsman ? '🛠️ Usta hisobi — Ish haqlari va Kartaga chiqarish' : '👤 Mijoz hisobi — Xizmatlar to\'lovi va Balans' }}
+              {{ authStore.isCraftsman ? 'Usta hisobi — Ish haqlari va Kartaga chiqarish' : 'Mijoz hisobi — Xizmatlar to\'lovi va Balans' }}
             </span>
           </div>
         </div>

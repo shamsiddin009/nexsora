@@ -67,7 +67,7 @@ defineProps({
 function handleShare() {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(window.location.href)
-    toast.success('Nusxa olindi', 'Profil havolasi nusxalandi! 📋')
+    toast.success('Nusxa olindi', 'Profil havolasi nusxalandi!')
   }
 }
 </script>

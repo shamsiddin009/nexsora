@@ -2,7 +2,7 @@
   <div class="admin-card card">
     <div class="card-header-clean">
       <div>
-        <h3>🏅 Ustalarni Tasdiqlash & KYC So'rovlari</h3>
+        <h3 class="flex-title"><ShieldCheck :size="20" class="text-primary" /> Ustalarni Tasdiqlash & KYC So'rovlari</h3>
         <p>Hujjatlari tekshirilgan ustalarga «Tasdiqlangan Usta» ko'k nishoni beriladi</p>
       </div>
       <span class="badge badge-info">{{ verificationsList.length }} ta ariza</span>
@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import { BadgeCheck, Phone, MapPin, FileText, Award, X } from 'lucide-vue-next'
+import { BadgeCheck, Phone, MapPin, FileText, Award, X, ShieldCheck } from 'lucide-vue-next'
 
 defineProps({
   verificationsList: { type: Array, required: true }

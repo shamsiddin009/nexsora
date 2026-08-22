@@ -22,7 +22,7 @@
           <div class="boost-benefits">
             <div class="benefit-item"><TrendingUp :size="15" /><span>Qidiruv tepasida ko'rsatiladi</span></div>
             <div class="benefit-item"><Eye :size="15" /><span>10x ko'proq ko'riladi</span></div>
-            <div class="benefit-item"><Sparkles :size="15" /><span>Sariq ⚡ belgisi bilan ajralib turadi</span></div>
+            <div class="benefit-item"><Sparkles :size="15" /><span>Sariq Boost nishoni bilan ajralib turadi</span></div>
             <div class="benefit-item"><Bell :size="15" /><span>Mos foydalanuvchilarga bildirishnoma</span></div>
           </div>
 
@@ -35,7 +35,7 @@
               :class="{ selected: selectedPlan === plan.id, popular: plan.popular }"
               @click="selectedPlan = plan.id"
             >
-              <div v-if="plan.popular" class="plan-popular-badge">🔥 Mashhur</div>
+              <div v-if="plan.popular" class="plan-popular-badge"><Flame :size="12" /> Mashhur</div>
               <div class="plan-header">
                 <div class="plan-duration">{{ plan.days }} kun</div>
                 <div class="plan-price">
@@ -63,7 +63,7 @@
                 :class="{ active: selectedMethod === method.id }"
                 @click="selectedMethod = method.id"
               >
-                <span class="method-icon">{{ method.icon }}</span>
+                <span class="method-icon"><component :is="method.icon" :size="16" /></span>
                 <span class="method-name">{{ method.name }}</span>
               </button>
             </div>
@@ -103,7 +103,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { Zap, X, TrendingUp, Eye, Sparkles, Bell, CheckCircle2, Loader2 } from 'lucide-vue-next'
+import { Zap, X, TrendingUp, Eye, Sparkles, Bell, CheckCircle2, Loader2, Flame, CreditCard, Wallet } from 'lucide-vue-next'
 import { useToast } from '../../composables/useToast'
 
 const props = defineProps({
@@ -127,9 +127,9 @@ const plans = [
 ]
 
 const paymentMethods = [
-  { id: 'payme', name: 'Payme', icon: '💳' },
-  { id: 'click', name: 'Click', icon: '⚡' },
-  { id: 'wallet', name: 'Hamyon', icon: '👛' },
+  { id: 'payme', name: 'Payme', icon: CreditCard },
+  { id: 'click', name: 'Click', icon: Zap },
+  { id: 'wallet', name: 'Hamyon', icon: Wallet },
 ]
 
 const selectedPlanData = computed(() => plans.find(p => p.id === selectedPlan.value))
@@ -161,7 +161,7 @@ async function activateBoost() {
 
     addToast({
       type: 'success',
-      title: '⚡ Boost faollashtirildi!',
+      title: 'Boost faollashtirildi!',
       message: `"${props.itemTitle}" ${selectedPlanData.value.days} kun davomida qidiruv tepasida ko'rsatiladi.`,
     })
 

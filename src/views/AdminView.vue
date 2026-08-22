@@ -348,7 +348,7 @@ function revokeCraftsman(craftsman) {
 
 function approvePayout(p) {
   p.status = 'completed'
-  toast.success("To'lov tasdiqlandi", `${p.craftsmanName} hisobiga ${formatPrice(p.amount)} muvaffaqiyatli chiqarildi! 💳`)
+  toast.success("To'lov tasdiqlandi", `${p.craftsmanName} hisobiga ${formatPrice(p.amount)} muvaffaqiyatli chiqarildi!`)
 }
 
 async function refreshData() {
@@ -369,7 +369,7 @@ async function refreshData() {
   } catch (e) {}
   setTimeout(() => {
     refreshing.value = false
-    toast.success("Yangilandi", "Barcha ma'lumotlar real vaqt rejimida yangilandi! ⚡")
+    toast.success("Yangilandi", "Barcha ma'lumotlar real vaqt rejimida yangilandi!")
   }, 400)
 }
 

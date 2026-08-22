@@ -2,7 +2,7 @@
   <div class="admin-card card">
     <div class="card-header-clean">
       <div>
-        <h3>🛡️ Escrow Arbitraj & Nizo Hal Qilish Markazi</h3>
+        <h3 class="flex-title"><Scale :size="20" class="text-primary" /> Escrow Arbitraj & Nizo Hal Qilish Markazi</h3>
         <p>Mijoz yoki usta ish natijasidan norozi bo'lganida platforma admini xolis qaror qabul qiladi</p>
       </div>
       <span class="badge badge-warning">{{ disputesList.length }} ta masala</span>

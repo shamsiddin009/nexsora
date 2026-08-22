@@ -52,7 +52,7 @@
         <div class="filter-item-city">
           <CustomSelect
             v-model="filters.city"
-            :options="[{ value: '', label: 'Barcha shaharlar', icon: '📍' }, ...CITY_OPTIONS]"
+            :options="[{ value: '', label: 'Barcha shaharlar', icon: MapPin }, ...CITY_OPTIONS]"
             placeholder="Barcha shaharlar"
             search-placeholder="Shaharni qidirish..."
             size="sm"
@@ -63,7 +63,7 @@
         <div class="filter-item-district" v-if="filters.city === 'Toshkent' || !filters.city">
           <CustomSelect
             v-model="filters.district"
-            :options="[{ value: '', label: 'Barcha tumanlar', icon: '🏙️' }, ...DISTRICT_OPTIONS]"
+            :options="[{ value: '', label: 'Barcha tumanlar', icon: Building }, ...DISTRICT_OPTIONS]"
             placeholder="Tuman tanlash"
             search-placeholder="Tumanni qidirish..."
             size="sm"
@@ -74,7 +74,7 @@
         <div class="filter-item-category">
           <CustomSelect
             v-model="filters.category"
-            :options="[{ value: '', label: 'Barcha kategoriyalar', icon: '✨' }, ...CATEGORY_OPTIONS]"
+            :options="[{ value: '', label: 'Barcha kategoriyalar', icon: Sparkles }, ...CATEGORY_OPTIONS]"
             placeholder="Barcha kategoriyalar"
             search-placeholder="Kategoriyani qidirish..."
             size="sm"
@@ -85,7 +85,7 @@
         <div class="filter-item-rating">
           <CustomSelect
             v-model="filters.minRating"
-            :options="[{ value: '', label: 'Barcha reytinglar', icon: '⭐' }, ...RATING_OPTIONS]"
+            :options="[{ value: '', label: 'Barcha reytinglar', icon: Star }, ...RATING_OPTIONS]"
             placeholder="Reyting"
             size="sm"
             clearable
@@ -307,7 +307,7 @@ import { formatPrice, getInitials, CATEGORY_OPTIONS, CITY_OPTIONS, DISTRICT_OPTI
 import { SAMPLE_SERVICES } from '../data/sampleServices'
 import {
   Search, Filter, RotateCcw, Plus, Wrench,
-  Star, Clock, X, MapPin, Heart, Map, LayoutGrid, Sparkles, Coins, ArrowRight
+  Star, Clock, X, MapPin, Heart, Map, LayoutGrid, Sparkles, Coins, ArrowRight, Building
 } from 'lucide-vue-next'
 
 const bookmarkStore = useBookmarkStore()
@@ -462,6 +462,7 @@ onMounted(() => {
 .text-gradient {
   background: var(--gradient-primary);
   -webkit-background-clip: text;
+  
   -webkit-text-fill-color: transparent;
 }
 

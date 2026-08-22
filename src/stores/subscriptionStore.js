@@ -95,28 +95,28 @@ export const useSubscriptionStore = defineStore('subscription', () => {
   const addOns = ref([
     {
       id: 'boost_top_3d',
-      name: "🚀 TOP-E'lon Boost (3 kun)",
+      name: "TOP-E'lon Boost (3 kun)",
       priceUzs: 29000,
       priceUsd: 2.5,
       desc: "E'loningiz 3 kun davomida qidiruv natijalarining eng yuqorisida qadalib turadi."
     },
     {
       id: 'boost_telegram',
-      name: "🤖 Telegram Kanalga Push E'lon",
+      name: "Telegram Kanalga Push E'lon",
       priceUzs: 39000,
       priceUsd: 3.2,
       desc: "E'loningiz rasmiy 50,000+ a'zoli Telegram kanalimizga rasm va tafsilotlar bilan yuboriladi."
     },
     {
       id: 'boost_urgent',
-      name: "⚡ Shoshilinch (Urgent) Nishoni",
+      name: "Shoshilinch (Urgent) Nishoni",
       priceUzs: 19000,
       priceUsd: 1.5,
       desc: "E'loningizga qizil chaqmoq belgisi qo'yiladi va ustalar 10 daqiqa ichida taklif yuboradi."
     },
     {
       id: 'boost_verified',
-      name: "🛡️ Tasdiqlangan (Verified) Usta Nishoni",
+      name: "Tasdiqlangan (Verified) Usta Nishoni",
       priceUzs: 49000,
       priceUsd: 4.0,
       desc: "Hujjatlaringiz tekshirilib, profilingizga ishonchli usta ko'k nishoni bir umrga beriladi."

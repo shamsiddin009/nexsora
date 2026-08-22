@@ -174,7 +174,7 @@ export function generateContractHtml({
         <div class="doc-meta">
           <div><strong>Shartnoma №:</strong> ${contractNumber}</div>
           <div><strong>Sana:</strong> ${formatDate(dealDate)}</div>
-          <div><strong>Holati:</strong> Escrow Muzlatilgan 🛡️</div>
+          <div><strong>Holati:</strong> Escrow Muzlatilgan (Xavfsiz)</div>
         </div>
       </div>
 
@@ -217,7 +217,7 @@ export function generateContractHtml({
           </div>
           <div class="spec-item">
             <span class="spec-label">Usta Kafolat Muddati:</span>
-            <span class="spec-val">🛡️ ${warrantyDays} kunlik bepul kafolat</span>
+            <span class="spec-val">${warrantyDays} kunlik bepul kafolat</span>
           </div>
         </div>
       </div>
@@ -245,7 +245,7 @@ export function generateContractHtml({
         </div>
         <div class="seal-box">
           NEXSORA ESCROW<br>
-          KAFOLAT MUHRI ✅<br>
+          KAFOLAT MUHRI [TASDIQLANGAN]<br>
           <small>ID: ${contractNumber.slice(-6)}</small>
         </div>
       </div>

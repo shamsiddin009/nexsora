@@ -17,7 +17,8 @@
     <!-- Messages -->
     <div class="messages-area">
       <div v-if="messages.length === 0" class="empty-msg">
-        Suhbat boshlang! 👋
+        <MessageSquare :size="24" class="text-muted" />
+        <span>Suhbat boshlang!</span>
       </div>
       <div
         v-for="msg in messages"
@@ -36,7 +37,7 @@
       <textarea
         v-model="input"
         class="chat-input"
-        placeholder="Xabar yozing... (Enter — yuborish)"
+        placeholder="Xabar yozing..."
         rows="1"
         @keydown.enter.exact.prevent="sendMessage"
       />
@@ -49,7 +50,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
-import { ArrowLeft, Send } from 'lucide-vue-next'
+import { ArrowLeft, Send, MessageSquare } from 'lucide-vue-next'
 import { supabase } from '../services/supabase'
 import { getInitials, formatRelativeTime } from '../utils'
 

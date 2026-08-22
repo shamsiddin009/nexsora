@@ -94,7 +94,13 @@ export function getStatusColor(status) {
   return colors[status] || 'var(--color-muted)'
 }
 
-export const JOB_CATEGORIES = [
+import {
+  Building2, Layers, Home, Paintbrush, Grid,
+  Building, Wrench, Zap, Hammer, Snowflake,
+  Sparkles, Brush, MapPin, Star
+} from 'lucide-vue-next'
+
+export const CATEGORIES = [
   'Quruvchi & Brigada',
   'G\'isht teruvchi',
   'Betonchi & Poydevor',
@@ -111,21 +117,23 @@ export const JOB_CATEGORIES = [
   'Boshqa',
 ]
 
+export const JOB_CATEGORIES = CATEGORIES
+
 export const CATEGORY_OPTIONS = [
-  { value: 'Quruvchi & Brigada', label: 'Quruvchi & Brigada', icon: '🏗️', desc: 'Noldan kalitgacha bino qurilishi va jamoalar' },
-  { value: 'G\'isht teruvchi', label: 'G\'isht teruvchi', icon: '🧱', desc: 'G\'isht, gazoblok, shlakoblok va devor terish' },
-  { value: 'Betonchi & Poydevor', label: 'Betonchi & Poydevor', icon: '🪵', desc: 'Fundament quyish, armatura va monolit' },
-  { value: 'Tom yopuvchi', label: 'Tom yopuvchi (Krovlya)', icon: '🏠', desc: 'Tom, chordoq, profnastil va cherepitsa' },
-  { value: 'Suvoqchi & Malyar', label: 'Suvoqchi & Malyar', icon: '🎨', desc: 'Suvoq, gipsokarton, shpaklyovka va bo\'yash' },
-  { value: 'Kafelchi & Plitochnik', label: 'Kafelchi & Plitochnik', icon: '🔲', desc: 'Kafel, marmar, granit va plitka terish' },
-  { value: 'Fasadchi', label: 'Fasadchi & Tashqi bezak', icon: '🏛️', desc: 'Travertin, termo-panel, alyukobond' },
-  { value: 'Santexnik', label: 'Santexnik', icon: '🔧', desc: 'Suv quvurlari, issiq pol va montaj' },
-  { value: 'Elektrik', label: 'Elektrik', icon: '⚡', desc: 'Simlar, avtomat va elektr ta\'minoti' },
-  { value: 'Duradgor & Mebel', label: 'Duradgor & Mebel', icon: '🪚', desc: 'Eshik, rom va mebel yig\'ish' },
-  { value: 'Konditsioner', label: 'Konditsioner', icon: '❄️', desc: 'O\'rnatish, ta\'mirlash va freon' },
-  { value: 'Temirchi & Svarka', label: 'Temirchi & Svarka', icon: '🔨', desc: 'Darvoza, panjara va metall konstruksiya' },
-  { value: 'Tozalovchi', label: 'Tozalovchi', icon: '🧹', desc: 'Qurilishdan keyingi tozalash va cleaning' },
-  { value: 'Boshqa', label: 'Boshqa xizmatlar', icon: '✨', desc: 'Boshqa turdagi mutaxassisliklar' },
+  { value: 'Quruvchi & Brigada', label: 'Quruvchi & Brigada', icon: Building2, desc: 'Noldan kalitgacha bino qurilishi va jamoalar' },
+  { value: 'G\'isht teruvchi', label: 'G\'isht teruvchi', icon: Layers, desc: 'G\'isht, gazoblok, shlakoblok va devor terish' },
+  { value: 'Betonchi & Poydevor', label: 'Betonchi & Poydevor', icon: Layers, desc: 'Fundament quyish, armatura va monolit' },
+  { value: 'Tom yopuvchi', label: 'Tom yopuvchi (Krovlya)', icon: Home, desc: 'Tom, chordoq, profnastil va cherepitsa' },
+  { value: 'Suvoqchi & Malyar', label: 'Suvoqchi & Malyar', icon: Paintbrush, desc: 'Suvoq, gipsokarton, shpaklyovka va bo\'yash' },
+  { value: 'Kafelchi & Plitochnik', label: 'Kafelchi & Plitochnik', icon: Grid, desc: 'Kafel, marmar, granit va plitka terish' },
+  { value: 'Fasadchi', label: 'Fasadchi & Tashqi bezak', icon: Building, desc: 'Travertin, termo-panel, alyukobond' },
+  { value: 'Santexnik', label: 'Santexnik', icon: Wrench, desc: 'Suv quvurlari, issiq pol va montaj' },
+  { value: 'Elektrik', label: 'Elektrik', icon: Zap, desc: 'Simlar, avtomat va elektr ta\'minoti' },
+  { value: 'Duradgor & Mebel', label: 'Duradgor & Mebel', icon: Hammer, desc: 'Eshik, rom va mebel yig\'ish' },
+  { value: 'Konditsioner', label: 'Konditsioner', icon: Snowflake, desc: 'O\'rnatish, ta\'mirlash va freon' },
+  { value: 'Temirchi & Svarka', label: 'Temirchi & Svarka', icon: Hammer, desc: 'Darvoza, panjara va metall konstruksiya' },
+  { value: 'Tozalovchi', label: 'Tozalovchi', icon: Brush, desc: 'Qurilishdan keyingi tozalash va cleaning' },
+  { value: 'Boshqa', label: 'Boshqa xizmatlar', icon: Sparkles, desc: 'Boshqa turdagi mutaxassisliklar' },
 ]
 
 
@@ -164,26 +172,26 @@ export const TASHKENT_DISTRICTS = [
 export const DISTRICT_OPTIONS = TASHKENT_DISTRICTS.map(d => ({
   value: d,
   label: `${d} tumani`,
-  icon: '🏙️',
+  icon: Building,
   desc: `Toshkent shahri, ${d} tumani`
 }))
 
 export const RATING_OPTIONS = [
-  { value: '4.5', label: '4.5+ ⭐ A\'lo reyting', icon: '⭐' },
-  { value: '4.0', label: '4.0+ ⭐ Yaxshi reyting', icon: '⭐' },
-  { value: '3.0', label: '3.0+ ⭐ O\'rtacha reyting', icon: '⭐' },
+  { value: '4.5', label: '4.5+ A\'lo reyting', icon: Star },
+  { value: '4.0', label: '4.0+ Yaxshi reyting', icon: Star },
+  { value: '3.0', label: '3.0+ O\'rtacha reyting', icon: Star },
 ]
 
 export const CITY_OPTIONS = UZ_CITIES.map(city => ({
   value: city,
   label: city,
-  icon: '📍',
+  icon: MapPin,
   desc: `${city} shahri va atrofi`
 }))
 
 export function getCategoryIcon(catName) {
   const found = CATEGORY_OPTIONS.find(c => c.value === catName)
-  return found?.icon || '🛠️'
+  return found?.icon || Wrench
 }
 
 export function debounce(fn, delay = 300) {

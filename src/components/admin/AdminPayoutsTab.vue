@@ -2,7 +2,7 @@
   <div class="admin-card card">
     <div class="card-header-clean">
       <div>
-        <h3>💳 Ustalarning Pul Yechib Olish (Payout) So'rovlari</h3>
+        <h3 class="flex-title"><CreditCard :size="20" class="text-primary" /> Ustalarning Pul Yechib Olish (Payout) So'rovlari</h3>
         <p>Ustalar bajargan ishlaridan to'plangan pullarni Uzcard / Humo kartalariga chiqarish arizalari</p>
       </div>
       <span class="badge badge-success">{{ payoutsList.length }} ta so'rov</span>
@@ -36,7 +36,9 @@
             <td><strong class="text-success payout-amount">{{ formatPrice(p.amount) }}</strong></td>
             <td>
               <span class="status-pill" :class="p.status === 'completed' ? 'pill-completed' : 'pill-pending'">
-                {{ p.status === 'completed' ? '✅ To\'landi' : '⏳ Kutilmoqda' }}
+                <CheckCircle2 v-if="p.status === 'completed'" :size="13" />
+                <Clock v-else :size="13" />
+                <span>{{ p.status === 'completed' ? 'To\'landi' : 'Kutilmoqda' }}</span>
               </span>
             </td>
             <td>
@@ -58,7 +60,7 @@
 </template>
 
 <script setup>
-import { CheckCircle2 } from 'lucide-vue-next'
+import { CheckCircle2, CreditCard, Clock } from 'lucide-vue-next'
 import { formatPrice } from '../../utils'
 
 defineProps({

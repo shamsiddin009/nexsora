@@ -55,7 +55,10 @@
           <!-- Category Ratings -->
           <div class="category-ratings">
             <div class="cat-rating-item" v-for="cat in categories" :key="cat.key">
-              <span class="cat-label">{{ cat.label }}</span>
+              <span class="cat-label">
+                <component :is="cat.icon" :size="15" class="text-primary" />
+                <span>{{ cat.label }}</span>
+              </span>
               <div class="cat-stars">
                 <button
                   v-for="i in 5"
@@ -117,7 +120,7 @@
 
 <script setup>
 import { ref, reactive, watch } from 'vue'
-import { Star, X, ThumbsUp, CheckCircle2, Loader2 } from 'lucide-vue-next'
+import { Star, X, ThumbsUp, CheckCircle2, Loader2, Wrench, Clock, MessageSquare, Coins } from 'lucide-vue-next'
 import { useToast } from '../../composables/useToast'
 
 const props = defineProps({
@@ -138,10 +141,10 @@ const submitting = ref(false)
 const catRatings = reactive({})
 
 const categories = [
-  { key: 'quality', label: '🛠️ Ish sifati' },
-  { key: 'timing', label: '⏰ O\'z vaqtidaligi' },
-  { key: 'communication', label: '💬 Muloqot' },
-  { key: 'price_quality', label: '💰 Narx-sifat' },
+  { key: 'quality', label: 'Ish sifati', icon: Wrench },
+  { key: 'timing', label: "O'z vaqtidaligi", icon: Clock },
+  { key: 'communication', label: 'Muloqot', icon: MessageSquare },
+  { key: 'price_quality', label: 'Narx-sifat', icon: Coins },
 ]
 
 const ratingLabels = ['Yomon', 'Qoniqarsiz', 'O\'rtacha', 'Yaxshi', 'A\'lo!']

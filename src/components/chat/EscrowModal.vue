@@ -350,7 +350,7 @@ async function handleSubmit() {
 
     if (result.success) {
       toast.success(
-        'Xavfsiz Bitim Tuzildi! 🛡️',
+        'Xavfsiz Bitim Tuzildi!',
         `Mablag' (${formatPrice(form.value.amount)}) xavfsiz muzlatildi va ${form.value.warrantyDays} kunlik kafolat belgilandi!`
       )
       emit('created', {

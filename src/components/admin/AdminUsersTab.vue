@@ -2,7 +2,7 @@
   <div class="admin-card card">
     <div class="card-header-clean">
       <div>
-        <h3>👥 Foydalanuvchilar Bazasi & CRM</h3>
+        <h3 class="flex-title"><Users :size="20" class="text-primary" /> Foydalanuvchilar Bazasi & CRM</h3>
         <p>Mijozlar, Ustalar, rollar, balans va hisoblar holati</p>
       </div>
       
@@ -23,8 +23,8 @@
           @change="$emit('update:roleFilter', $event.target.value)"
         >
           <option value="all">Barcha rollar</option>
-          <option value="craftsman">🔨 Faqat Ustalar</option>
-          <option value="client">👤 Faqat Mijozlar</option>
+          <option value="craftsman">Faqat Ustalar</option>
+          <option value="client">Faqat Mijozlar</option>
         </select>
       </div>
     </div>
@@ -58,7 +58,9 @@
             </td>
             <td>
               <span class="role-pill" :class="u.role === 'craftsman' ? 'craftsman-pill' : 'client-pill'">
-                {{ u.role === 'craftsman' ? '🔨 Usta' : '👤 Mijoz' }}
+                <Wrench v-if="u.role === 'craftsman'" :size="13" />
+                <User v-else :size="13" />
+                <span>{{ u.role === 'craftsman' ? 'Usta' : 'Mijoz' }}</span>
               </span>
             </td>
             <td class="cell-phone">{{ u.phone || 'Kiritilmagan' }}</td>
@@ -72,7 +74,9 @@
             </td>
             <td>
               <span class="status-indicator-badge" :class="u.is_blocked ? 'blocked' : 'active'">
-                {{ u.is_blocked ? '🚫 Bloklangan' : '🟢 Faol' }}
+                <Ban v-if="u.is_blocked" :size="13" />
+                <CheckCircle2 v-else :size="13" />
+                <span>{{ u.is_blocked ? 'Bloklangan' : 'Faol' }}</span>
               </span>
             </td>
             <td>
@@ -102,7 +106,7 @@
 </template>
 
 <script setup>
-import { Search, PlusCircle, Ban } from 'lucide-vue-next'
+import { Search, PlusCircle, Ban, Users, Wrench, User, CheckCircle2 } from 'lucide-vue-next'
 import { formatPrice } from '../../utils'
 
 defineProps({
@@ -114,9 +118,9 @@ defineProps({
 defineEmits(['update:searchQuery', 'update:roleFilter', 'open-balance-modal', 'toggle-block-user'])
 
 function getPlanLabel(plan) {
-  if (plan === 'pro') return '⭐ Pro Usta'
-  if (plan === 'brigade') return '🔥 Usta Brigada'
-  if (plan === 'business') return '🏢 Biznes'
+  if (plan === 'pro') return 'Pro Usta'
+  if (plan === 'brigade') return 'Usta Brigada'
+  if (plan === 'business') return 'Biznes'
   return 'Oddiy (Free)'
 }
 </script>

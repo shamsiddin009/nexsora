@@ -45,22 +45,22 @@
             <div class="form-group">
               <label class="input-label">Kategoriya:</label>
               <select v-model="selectedCategory" class="select-clean">
-                <option value="Elektrik">⚡ Elektrik</option>
-                <option value="Santexnik">🔧 Santexnik</option>
-                <option value="Ta'mirchi">🏠 Ta'mirchi / Quruvchi</option>
-                <option value="Mebel">🛋️ Mebel yasash / yig'ish</option>
-                <option value="Konditsioner">❄️ Konditsioner & Sovutish</option>
-                <option value="Tozalash">✨ Tozalash / Cleaning</option>
-                <option value="Boshqa">🛠️ Boshqa soha</option>
+                <option value="Elektrik">Elektrik</option>
+                <option value="Santexnik">Santexnik</option>
+                <option value="Ta'mirchi">Ta'mirchi / Quruvchi</option>
+                <option value="Mebel">Mebel yasash / yig'ish</option>
+                <option value="Konditsioner">Konditsioner & Sovutish</option>
+                <option value="Tozalash">Tozalash / Cleaning</option>
+                <option value="Boshqa">Boshqa soha</option>
               </select>
             </div>
 
             <div class="form-group">
               <label class="input-label">Ish hajmi va qiyinligi:</label>
               <select v-model="complexityLevel" class="select-clean">
-                <option value="simple">🟢 Oddiy (1-3 soatlik ish)</option>
-                <option value="medium">🟡 O'rtacha (1-2 kunlik)</option>
-                <option value="complex">🔴 Katta / Murakkab (Kapital ta'mir)</option>
+                <option value="simple">Oddiy (1-3 soatlik ish)</option>
+                <option value="medium">O'rtacha (1-2 kunlik)</option>
+                <option value="complex">Katta / Murakkab (Kapital ta'mir)</option>
               </select>
             </div>
           </div>
@@ -78,7 +78,7 @@
         <!-- AI RESULTS CARD -->
         <div v-if="result" class="ai-result-box">
           <div class="ai-result-header">
-            <span class="ai-result-tag">🎯 AI Tavsiya Qilgan Byudjet:</span>
+            <span class="ai-result-tag"><Target :size="14" /> AI Tavsiya Qilgan Byudjet:</span>
             <div class="ai-price-range">
               <strong class="price-min">{{ formatPrice(result.minBudget) }}</strong>
               <span class="price-dash">—</span>
@@ -111,7 +111,7 @@
           </div>
 
           <p class="ai-explanation">
-            💡 <strong>AI xulosasi:</strong> {{ result.explanation }}
+            <Lightbulb :size="15" class="text-warning" /> <strong>AI xulosasi:</strong> {{ result.explanation }}
           </p>
 
           <!-- Apply Button -->
@@ -129,7 +129,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { Sparkles, X, Wrench, Clock, ShieldCheck, Users, Check } from 'lucide-vue-next'
+import { Sparkles, X, Wrench, Clock, ShieldCheck, Users, Check, Target, Lightbulb } from 'lucide-vue-next'
 import { formatPrice } from '../utils'
 import { useToast } from '../composables/useToast'
 
@@ -210,7 +210,7 @@ function calculateEstimate() {
       explanation: `Toshkent va viloyatlardagi oxirgi 90 kun ichida muvaffaqiyatli topshirilgan shunga o'xshash ${count} ta buyurtma narxlari tahlil qilindi.`
     }
 
-    toast.success("AI Hisob-kitobi tayyor", "Optimal bozor byudjeti va muddatlari shakllantirildi! ⚡")
+    toast.success("AI Hisob-kitobi tayyor", "Optimal bozor byudjeti va muddatlari shakllantirildi!")
   }, 600)
 }
 

@@ -145,20 +145,20 @@ const comment = ref('')
 const selectedTags = ref([])
 
 const craftsmanQuickTags = [
-  '⚡ Tez va sifatli',
-  '💎 A\'lo natija',
-  '🤝 Xushmuomala usta',
-  '🎯 Narxiga arziydi',
-  '⏱ O\'z vaqtida topshirdi',
-  '🧹 Ish joyini toza qoldirdi'
+  'Tez va sifatli',
+  'A\'lo natija',
+  'Xushmuomala usta',
+  'Narxiga arziydi',
+  'O\'z vaqtida topshirdi',
+  'Ish joyini toza qoldirdi'
 ]
 
 const clientQuickTags = [
-  '💰 O\'z vaqtida to\'ladi',
-  '🤝 Xushmuomala va samimiy',
-  '📋 Talabni aniq tushuntirdi',
-  '⚡ Tezda qabul qildi',
-  '⭐ Ajoyib mijoz'
+  'O\'z vaqtida to\'ladi',
+  'Xushmuomala va samimiy',
+  'Talabni aniq tushuntirdi',
+  'Tezda qabul qildi',
+  'Ajoyib mijoz'
 ]
 
 const currentQuickTags = computed(() => {
@@ -171,8 +171,8 @@ watch(() => props.show, (newVal) => {
     hoverRating.value = 0
     comment.value = ''
     selectedTags.value = props.reviewMode === 'client_rates_craftsman' 
-      ? ['⚡ Tez va sifatli', '💎 A\'lo natija']
-      : ['💰 O\'z vaqtida to\'ladi', '🤝 Xushmuomala va samimiy']
+      ? ['Tez va sifatli', 'A\'lo natija']
+      : ['O\'z vaqtida to\'ladi', 'Xushmuomala va samimiy']
   }
 })
 
@@ -186,11 +186,11 @@ function toggleTag(tag) {
 
 function getRatingLabel(r) {
   switch (r) {
-    case 5: return "A'lo darajada (Tavsiya qilaman) 🌟"
-    case 4: return "Juda yaxshi 👍"
-    case 3: return "Yaxshi 🙂"
-    case 2: return "Qoniqarli 😐"
-    case 1: return "Qoniqarsiz 👎"
+    case 5: return "A'lo darajada (Tavsiya qilaman)"
+    case 4: return "Juda yaxshi"
+    case 3: return "Yaxshi"
+    case 2: return "Qoniqarli"
+    case 1: return "Qoniqarsiz"
     default: return ""
   }
 }

@@ -31,7 +31,7 @@
         <div class="time-box">
           <span class="audio-time">{{ formattedCurrentTime }}</span>
           <span class="audio-dot">•</span>
-          <span class="audio-badge">🎙️ Ovozli xabar</span>
+          <span class="audio-badge"><Mic :size="12" class="inline-icon" /> Ovozli xabar</span>
         </div>
 
         <button
@@ -61,7 +61,7 @@
 
 <script setup>
 import { ref, computed, onBeforeUnmount, watch } from 'vue'
-import { Play, Pause } from 'lucide-vue-next'
+import { Play, Pause, Mic } from 'lucide-vue-next'
 
 const props = defineProps({
   audioUrl: { type: String, default: '' },

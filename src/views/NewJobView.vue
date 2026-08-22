@@ -264,7 +264,7 @@ import AiPriceEstimatorModal from '../components/AiPriceEstimatorModal.vue'
 import { CATEGORY_OPTIONS, CITY_OPTIONS, JOB_CATEGORIES, UZ_CITIES, toDeterministicUuid, generateUuid } from '../utils'
 import {
   Type, Briefcase, Sparkles, Loader2, Check, Lightbulb,
-  HardHat, ShieldCheck, Building2, Wrench, Plus, Ruler, Layers
+  HardHat, ShieldCheck, Building2, Wrench, Plus, Ruler, Layers, Home, Building
 } from 'lucide-vue-next'
 import { sendTelegramNotification, formatJobAlert, formatClientJobConfirmation } from '../services/telegramNotifier'
 
@@ -281,7 +281,7 @@ function setProjectType(type) {
   if (type === 'building') {
     form.value.category = 'Quruvchi & Brigada'
     if (!form.value.title) {
-      form.value.title = 'Kottej / Bino qurilishiga usta brigadasi'
+      form.value.title = 'Bino / Kottej noldan qurish'
     }
   } else {
     if (form.value.category === 'Quruvchi & Brigada') {
@@ -291,10 +291,10 @@ function setProjectType(type) {
 }
 
 const FLOOR_OPTIONS = [
-  { value: '1', label: '1 qavatli bino', icon: '🏠' },
-  { value: '2', label: '2 qavatli (Mansarda bilan)', icon: '🏡' },
-  { value: '3', label: '3 qavat va undan ortiq', icon: '🏢' },
-  { value: 'commercial', label: 'Tijoriy / Ofis binosi', icon: '🏬' },
+  { value: '1', label: '1 qavatli bino', icon: Home },
+  { value: '2', label: '2 qavatli (Mansarda bilan)', icon: Home },
+  { value: '3', label: '3 qavat va undan ortiq', icon: Building },
+  { value: 'commercial', label: 'Tijoriy / Ofis binosi', icon: Building2 },
 ]
 
 const buildingDetails = ref({
@@ -377,7 +377,7 @@ async function handleSubmit() {
   try {
     let finalDescription = form.value.description
     if (form.value.category === 'Quruvchi & Brigada' && buildingDetails.value.area) {
-      finalDescription += `\n\n🏢 Bino parametrlari: ${buildingDetails.value.area} m² | Qavatlar: ${buildingDetails.value.floors} | Bosqichma-bosqich (Milestone) to'lov`
+      finalDescription += `\n\nBino parametrlari: ${buildingDetails.value.area} m² | Qavatlar: ${buildingDetails.value.floors} | Bosqichma-bosqich (Milestone) to'lov`
     }
 
     const clientId = toDeterministicUuid(authStore.user?.id || 'client-local-id')

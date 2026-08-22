@@ -172,7 +172,13 @@
             class="addon-card card"
           >
             <div class="addon-info">
-              <h4 class="addon-title">{{ addon.name }}</h4>
+              <h4 class="addon-title">
+                <Rocket v-if="addon.id === 'boost_top_3d'" :size="18" class="addon-icon-svg" />
+                <Bot v-else-if="addon.id === 'boost_telegram'" :size="18" class="addon-icon-svg" />
+                <Zap v-else-if="addon.id === 'boost_urgent'" :size="18" class="addon-icon-svg" />
+                <ShieldCheck v-else :size="18" class="addon-icon-svg" />
+                <span>{{ addon.name }}</span>
+              </h4>
               <p class="addon-desc">{{ addon.desc }}</p>
             </div>
             <div class="addon-action">
@@ -280,7 +286,7 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { 
   Sparkles, Wrench, Building2, CheckCircle2, Zap, 
-  ArrowRight, Calculator, ShieldCheck, Lock, X, Lightbulb
+  ArrowRight, Calculator, ShieldCheck, Lock, X, Lightbulb, Rocket, Bot
 } from 'lucide-vue-next'
 import { useSubscriptionStore } from '../stores/subscriptionStore'
 import { useWalletStore } from '../stores/walletStore'

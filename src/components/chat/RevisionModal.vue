@@ -107,21 +107,21 @@ const props = defineProps({
 const emit = defineEmits(['close', 'submit'])
 
 const comment = ref('')
-const selectedTags = ref(['🛠 Kamchiliklar to\'liq tuzatilmagan'])
+const selectedTags = ref(['Kamchiliklar to\'liq tuzatilmagan'])
 
 const revisionQuickTags = [
-  '🛠 Kamchiliklar to\'liq tuzatilmagan',
-  '📐 O\'lcham yoki montajda xatolik bor',
-  '🧹 Tozalik va tartibga e\'tibor berilmagan',
-  '⏱ Ish to\'liq yakuniga yetmagan',
-  '💡 Kelishilgan talablarga mos kelmadi',
-  '⚙️ Qayta tekshirish talab etiladi'
+  'Kamchiliklar to\'liq tuzatilmagan',
+  'O\'lcham yoki montajda xatolik bor',
+  'Tozalik va tartibga e\'tibor berilmagan',
+  'Ish to\'liq yakuniga yetmagan',
+  'Kelishilgan talablarga mos kelmadi',
+  'Qayta tekshirish talab etiladi'
 ]
 
 watch(() => props.show, (newVal) => {
   if (newVal) {
     comment.value = ''
-    selectedTags.value = ['🛠 Kamchiliklar to\'liq tuzatilmagan']
+    selectedTags.value = ['Kamchiliklar to\'liq tuzatilmagan']
   }
 })
 

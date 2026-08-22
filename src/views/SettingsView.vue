@@ -184,9 +184,11 @@
                   </div>
                 </div>
 
-                <span v-if="tgTestStatus" class="tg-test-feedback" :class="tgTestSuccess ? 'success' : 'error'">
-                  {{ tgTestStatus }}
-                </span>
+                <div v-if="tgTestStatus" class="tg-test-feedback" :class="tgTestSuccess ? 'success' : 'error'">
+                  <CheckCircle2 v-if="tgTestSuccess" :size="15" />
+                  <AlertTriangle v-else :size="15" />
+                  <span>{{ tgTestStatus }}</span>
+                </div>
               </div>
               <div class="input-group">
                 <label class="input-label">Shahar / Viloyat</label>
@@ -498,7 +500,7 @@ async function handleTestTelegram() {
   try {
     const isId = /^\d+$/.test(form.value.telegram.trim())
     if (!isId) {
-      tgTestStatus.value = "⚠️ Raqamli Telegram ID kiriting (masalan: 7952376402). @userinfobot dan olishingiz mumkin."
+      tgTestStatus.value = "Raqamli Telegram ID kiriting (masalan: 7952376402). @userinfobot dan olishingiz mumkin."
       tgTestSuccess.value = false
       return
     }
@@ -508,17 +510,17 @@ async function handleTestTelegram() {
 
     const ok = await sendTelegramNotification(
       form.value.telegram.trim(),
-      `🎉 <b>Nexsora boti muvaffaqiyatli ulandi!</b>\n\nIsm: <b>${form.value.full_name || 'Foydalanuvchi'}</b>\nHolat: ✅ Xabarnomalar faol\n\nEndi yangi e'lonlar va takliflar shu yerga keladi!`
+      `<b>Nexsora boti muvaffaqiyatli ulandi!</b>\n\nIsm: <b>${form.value.full_name || 'Foydalanuvchi'}</b>\nHolat: Xabarnomalar faol\n\nEndi yangi e'lonlar va takliflar shu yerga keladi!`
     )
     if (ok) {
-      tgTestStatus.value = "✅ Telegramga test xabar yuborildi! Telegramingizni tekshiring."
+      tgTestStatus.value = "Telegramga test xabar yuborildi! Telegramingizni tekshiring."
       tgTestSuccess.value = true
     } else {
-      tgTestStatus.value = "❌ Xabar yuborilmadi. Avval @NexsoraOPT_bot ga kirib /start bosing!"
+      tgTestStatus.value = "Xabar yuborilmadi. Avval @NexsoraOPT_bot ga kirib /start bosing!"
       tgTestSuccess.value = false
     }
   } catch (err) {
-    tgTestStatus.value = "❌ Xatolik yuz berdi. @NexsoraOPT_bot ga /start bosing."
+    tgTestStatus.value = "Xatolik yuz berdi. @NexsoraOPT_bot ga /start bosing."
     tgTestSuccess.value = false
   } finally {
     testingTelegram.value = false

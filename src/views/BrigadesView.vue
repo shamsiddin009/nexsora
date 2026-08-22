@@ -80,6 +80,7 @@
             :class="{ active: selectedSpecialty === '' }"
             @click="selectedSpecialty = ''"
           >
+            <Sparkles :size="14" />
             <span>Barcha Yo'nalishlar</span>
           </button>
           <button
@@ -89,6 +90,7 @@
             :class="{ active: selectedSpecialty === spec.name }"
             @click="selectedSpecialty = spec.name"
           >
+            <component :is="spec.icon" :size="14" />
             <span>{{ spec.name }}</span>
           </button>
         </div>
@@ -167,7 +169,7 @@
                 <span class="comp-label">Jamoa tarkibi:</span>
                 <div class="comp-tags-row">
                   <div v-for="m in brigade.members" :key="m.role" class="comp-tag">
-                    <span>{{ m.icon }}</span>
+                    <Users :size="12" class="text-primary" />
                     <span>{{ m.role }}: <strong>{{ m.count }} ta</strong></span>
                   </div>
                 </div>
@@ -225,7 +227,8 @@
 import { ref, computed, onMounted } from 'vue'
 import {
   HardHat, Plus, Building2, Search, MapPin, Users,
-  BadgeCheck, Star, Award, Phone, Briefcase, Wrench
+  BadgeCheck, Star, Award, Phone, Briefcase, Wrench,
+  Layers, Home, Paintbrush, Grid, Building, Hammer, Sparkles
 } from 'lucide-vue-next'
 import { UZ_CITIES } from '../utils'
 import { SAMPLE_BRIGADES } from '../data/sampleBrigades'
@@ -244,13 +247,13 @@ const showCreateModal = ref(false)
 const brigades = ref([...SAMPLE_BRIGADES])
 
 const specialtyOptions = [
-  { name: 'G\'isht teruvchi', icon: '🧱' },
-  { name: 'Betonchi & Poydevor', icon: '🪵' },
-  { name: 'Tom yopuvchi', icon: '🏠' },
-  { name: 'Suvoqchi & Malyar', icon: '🎨' },
-  { name: 'Kafelchi & Plitochnik', icon: '🔲' },
-  { name: 'Fasadchi', icon: '🏛️' },
-  { name: 'Temirchi & Svarka', icon: '🔨' }
+  { name: 'G\'isht teruvchi', icon: Layers },
+  { name: 'Betonchi & Poydevor', icon: Layers },
+  { name: 'Tom yopuvchi', icon: Home },
+  { name: 'Suvoqchi & Malyar', icon: Paintbrush },
+  { name: 'Kafelchi & Plitochnik', icon: Grid },
+  { name: 'Fasadchi', icon: Building },
+  { name: 'Temirchi & Svarka', icon: Hammer }
 ]
 
 function loadCustomBrigades() {

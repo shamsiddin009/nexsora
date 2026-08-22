@@ -113,7 +113,7 @@
 
         <!-- Member Search Section -->
         <div class="form-group member-search-section">
-          <label class="input-label">👥 Jamoa a'zolarini qo'shish (Ism yoki telefon raqam):</label>
+          <label class="input-label"><Users :size="15" class="inline-icon" /> Jamoa a'zolarini qo'shish (Ism yoki telefon raqam):</label>
           <div class="member-search-row">
             <div class="member-search-input-wrap">
               <Search :size="15" class="search-icon-inner" />
@@ -162,7 +162,9 @@
             <Link2 :size="14" />
             <span>Yoki do'stingizga <strong>taklif havolasini</strong> yuboring:</span>
             <button type="button" class="copy-link-btn" @click="copyInviteLink">
-              {{ linkCopied ? '✅ Nusxalandi!' : '🔗 Havolani nusxalash' }}
+              <Check :size="14" v-if="linkCopied" />
+              <Link2 :size="14" v-else />
+              <span>{{ linkCopied ? 'Nusxalandi!' : 'Havolani nusxalash' }}</span>
             </button>
           </div>
         </div>
@@ -348,7 +350,7 @@ function handleCreateBrigade() {
 
   setTimeout(() => {
     saving.value = false
-    toast.success("Brigada ro'yxatdan o'tkazildi", `«${newBrigade.name}» jamoasi muvaffaqiyatli tuzildi! 🏗️`)
+    toast.success("Brigada ro'yxatdan o'tkazildi", `«${newBrigade.name}» jamoasi muvaffaqiyatli tuzildi!`)
     emit('created', newBrigade)
     emit('close')
   }, 400)

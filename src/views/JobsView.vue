@@ -76,7 +76,7 @@
                   <label class="input-label">Shahar / Viloyat</label>
                   <CustomSelect
                     v-model="filters.city"
-                    :options="[{ value: '', label: 'Barcha shaharlar', icon: '📍' }, ...CITY_OPTIONS]"
+                    :options="[{ value: '', label: 'Barcha shaharlar', icon: MapPin }, ...CITY_OPTIONS]"
                     placeholder="Barcha shaharlar"
                     search-placeholder="Shaharni qidirish..."
                     size="sm"

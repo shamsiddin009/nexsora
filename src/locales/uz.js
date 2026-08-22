@@ -15,7 +15,7 @@ export default {
     logout: 'Chiqish',
   },
   home: {
-    heroTag: "⚡ O'zbekistonning #1 Xizmatlar Platformasi",
+    heroTag: "O'zbekistonning #1 Xizmatlar Platformasi",
     heroTitle: "Har qanday vazifa uchun ishonchli ustalarni toping",
     heroSubtitle: "Santexnika, elektr, ta'mirlash, IT va boshqa 100+ yo'nalishdagi tasdiqlangan mutaxassislar xizmatingizda.",
     findCraftsman: 'Usta topish',

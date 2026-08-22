@@ -38,7 +38,8 @@
           <span class="kpi-label">Escrow Muzlatilgan Mablag'</span>
           <h2 class="kpi-value text-warning">{{ formatPrice(stats.escrowLocked) }}</h2>
           <div class="kpi-growth text-muted">
-            <span>🛡️ {{ stats.activeEscrowJobs }} ta xavfsiz bitimda</span>
+            <ShieldCheck :size="13" class="text-warning" />
+            <span>{{ stats.activeEscrowJobs }} ta xavfsiz bitimda</span>
           </div>
         </div>
       </div>
@@ -142,7 +143,7 @@
 </template>
 
 <script setup>
-import { TrendingUp, DollarSign, ShieldAlert, Award, Users, CheckCircle2, Scale, Send } from 'lucide-vue-next'
+import { TrendingUp, DollarSign, ShieldAlert, Award, Users, CheckCircle2, Scale, Send, ShieldCheck } from 'lucide-vue-next'
 import { formatPrice } from '../../utils'
 
 defineProps({

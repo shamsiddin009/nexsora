@@ -21,10 +21,10 @@ export const SAMPLE_BRIGADES = [
     description: 'Xususiy kottejlar, 2-3 qavatli hovlilar va savdo markazlarini noldan kalitgacha (poydevordan tom va pardozgacha) quramiz. O\'zimizning professional texnikamiz, lesa va kranlarimiz mavjud.',
     specialties: ['G\'isht teruvchi', 'Betonchi & Poydevor', 'Tom yopuvchi', 'Suvoqchi & Malyar', 'Fasadchi'],
     members: [
-      { role: 'G\'isht teruvchi ustalar', count: 5, icon: '🧱' },
-      { role: 'Betonchi & Armaturachilar', count: 4, icon: '🪵' },
-      { role: 'Tom yopuvchi (Krovlya)', count: 2, icon: '🏠' },
-      { role: 'Suvoqchi & Fasadchilar', count: 3, icon: '🎨' }
+      { role: 'G\'isht teruvchi ustalar', count: 5 },
+      { role: 'Betonchi & Armaturachilar', count: 4 },
+      { role: 'Tom yopuvchi (Krovlya)', count: 2 },
+      { role: 'Suvoqchi & Fasadchilar', count: 3 }
     ],
     portfolio: [
       'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&auto=format&fit=crop&q=80',
@@ -50,10 +50,10 @@ export const SAMPLE_BRIGADES = [
     description: 'Katta maydondagi ofislar, restoranlar va kvartiralarni Evro ta\'mirlash bo\'yicha mutaxassis brigada. Gipsokarton figuralar, venetsianka, kafel va marmar montaji.',
     specialties: ['Suvoqchi & Malyar', 'Kafelchi & Plitochnik', 'Elektrik', 'Santexnik'],
     members: [
-      { role: 'Suvoqchi & Malyarlar', count: 4, icon: '🎨' },
-      { role: 'Kafel & Granit ustalari', count: 2, icon: '🔲' },
-      { role: 'Elektromontaj ustasi', count: 1, icon: '⚡' },
-      { role: 'Santexnik mutaxassis', count: 1, icon: '🔧' }
+      { role: 'Suvoqchi & Malyarlar', count: 4 },
+      { role: 'Kafel & Granit ustalari', count: 2 },
+      { role: 'Elektromontaj ustasi', count: 1 },
+      { role: 'Santexnik mutaxassis', count: 1 }
     ],
     portfolio: [
       'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=600&auto=format&fit=crop&q=80',
@@ -78,10 +78,10 @@ export const SAMPLE_BRIGADES = [
     description: 'Sanoat omborlari (Angar), fermalar va ko\'p qavatli binolarning metall karkas, poydevor va tom konstruksiyalarini tayyorlash bo\'yicha 18 kishilik professional brigada.',
     specialties: ['Tom yopuvchi', 'Betonchi & Poydevor', 'Temirchi & Svarka', 'G\'isht teruvchi'],
     members: [
-      { role: 'Tom ustalari (Krovlya)', count: 6, icon: '🏠' },
-      { role: 'Metall & Svarkachilar', count: 5, icon: '🔨' },
-      { role: 'Betonchi-monolit', count: 4, icon: '🪵' },
-      { role: 'G\'isht teruvchilar', count: 3, icon: '🧱' }
+      { role: 'Tom ustalari (Krovlya)', count: 6 },
+      { role: 'Metall & Svarkachilar', count: 5 },
+      { role: 'Betonchi-monolit', count: 4 },
+      { role: 'G\'isht teruvchilar', count: 3 }
     ],
     portfolio: [
       'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=600&auto=format&fit=crop&q=80',

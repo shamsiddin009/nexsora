@@ -195,13 +195,13 @@
 
                   <router-link to="/admin" class="dropdown-item admin-dropdown-item" @click="dropdownOpen = false">
                     <ShieldCheck :size="16" class="text-primary" />
-                    <span style="font-weight: 700">👑 Super Admin Panel</span>
+                    <span style="font-weight: 700">Super Admin Panel</span>
                     <span class="badge badge-primary" style="font-size: 0.65rem; margin-left: auto;">CRM</span>
                   </router-link>
 
                   <router-link to="/dashboard" class="dropdown-item" @click="dropdownOpen = false">
                     <LayoutDashboard :size="16" />
-                    <span>📊 Shaxsiy kabinet</span>
+                    <span>Shaxsiy kabinet</span>
                   </router-link>
 
 
