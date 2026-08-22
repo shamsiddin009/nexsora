@@ -578,9 +578,11 @@ onUnmounted(() => {
 }
 
 .nav-container {
-  max-width: 1360px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 clamp(16px, 3.5vw, 32px);
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;

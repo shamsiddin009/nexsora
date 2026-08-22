@@ -150,20 +150,15 @@ a:hover {
 
 /* Container & Layout Utilities */
 .container,
-.container-xl {
+.container-xl,
+.container-wide,
+.container-fluid {
   max-width: 1280px;
   margin: 0 auto;
   padding-left: clamp(16px, 3.5vw, 32px);
   padding-right: clamp(16px, 3.5vw, 32px);
   width: 100%;
-}
-
-.container-wide {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding-left: clamp(16px, 3.5vw, 32px);
-  padding-right: clamp(16px, 3.5vw, 32px);
-  width: 100%;
+  box-sizing: border-box;
 }
 
 .container-lg {
@@ -172,6 +167,7 @@ a:hover {
   padding-left: clamp(16px, 3vw, 28px);
   padding-right: clamp(16px, 3vw, 28px);
   width: 100%;
+  box-sizing: border-box;
 }
 
 .container-md {
@@ -180,6 +176,7 @@ a:hover {
   padding-left: clamp(16px, 3vw, 24px);
   padding-right: clamp(16px, 3vw, 24px);
   width: 100%;
+  box-sizing: border-box;
 }
 
 .container-tight,
@@ -189,6 +186,7 @@ a:hover {
   padding-left: clamp(16px, 3vw, 20px);
   padding-right: clamp(16px, 3vw, 20px);
   width: 100%;
+  box-sizing: border-box;
 }
 
 .container-page {
@@ -196,6 +194,7 @@ a:hover {
   max-width: 1280px;
   margin: 0 auto;
   padding: 32px clamp(16px, 3.5vw, 32px) 64px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {

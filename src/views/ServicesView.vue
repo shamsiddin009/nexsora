@@ -519,14 +519,15 @@ onMounted(() => {
 
 /* MAIN CONTENT */
 .services-main {
-  padding: 24px 24px 60px;
+  padding: 24px clamp(16px, 3.5vw, 32px) 60px;
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 1320px;
+  max-width: 1280px;
   margin: 0 auto;
   width: 100%;
+  box-sizing: border-box;
 }
 
 /* TOP HORIZONTAL FILTER TOOLBAR */

@@ -1325,8 +1325,8 @@ onUnmounted(() => {
 
 <style scoped>
 .messenger-container {
-  padding: 12px 16px 16px;
-  max-width: 1440px;
+  padding: 16px clamp(16px, 3.5vw, 32px) 20px;
+  max-width: 1280px;
   margin: 0 auto;
   width: 100%;
   height: calc(100vh - 68px);

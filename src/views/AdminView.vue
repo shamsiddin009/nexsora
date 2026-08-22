@@ -1,6 +1,6 @@
 <template>
   <div class="admin-page">
-    <div class="container-fluid admin-container">
+    <div class="container admin-container">
       
       <!-- ADMIN TOP HEADER BAR -->
       <header class="admin-header-card card">
@@ -386,9 +386,11 @@ onMounted(() => {
 }
 
 .admin-container {
-  max-width: 1400px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 clamp(16px, 3.5vw, 32px);
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 24px;

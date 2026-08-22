@@ -3,7 +3,7 @@
     
     <!-- HERO HEADER -->
     <section class="brigades-hero">
-      <div class="container-fluid hero-container">
+      <div class="container hero-container">
         <div class="hero-content">
           <div class="hero-badge">
             <HardHat :size="16" />
@@ -42,7 +42,7 @@
 
     <!-- SEARCH & FILTER TOOLBAR -->
     <section class="toolbar-section">
-      <div class="container-fluid toolbar-container">
+      <div class="container toolbar-container">
         
         <div class="toolbar-card card">
           <!-- Search box -->
@@ -103,7 +103,7 @@
 
     <!-- BRIGADES GRID -->
     <section class="brigades-list-section">
-      <div class="container-fluid">
+      <div class="container">
         
         <div class="section-heading">
           <div>
@@ -324,9 +324,8 @@ onMounted(() => {
 }
 
 .hero-container {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 .hero-content {
@@ -380,9 +379,6 @@ onMounted(() => {
 }
 
 .toolbar-container {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 24px;
   display: flex;
   flex-direction: column;
   gap: 14px;

@@ -162,10 +162,11 @@ onMounted(() => {
 }
 
 .my-services-content {
-  padding: 40px 24px 70px;
+  padding: 32px clamp(16px, 3.5vw, 32px) 70px;
   max-width: 1000px;
   margin: 0 auto;
   width: 100%;
+  box-sizing: border-box;
   flex: 1;
 }
 

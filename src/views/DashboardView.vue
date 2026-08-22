@@ -580,9 +580,11 @@ onMounted(() => {
 }
 
 .content {
-  padding: 36px 24px 80px;
-  max-width: 1400px;
+  padding: 32px clamp(16px, 3.5vw, 32px) 80px;
+  max-width: 1280px;
   margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 32px;

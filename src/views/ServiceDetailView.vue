@@ -342,10 +342,11 @@ onMounted(() => {
 }
 
 .detail-content {
-  padding: 32px 24px 60px;
+  padding: 32px clamp(16px, 3.5vw, 32px) 60px;
   max-width: 960px;
   margin: 0 auto;
   width: 100%;
+  box-sizing: border-box;
   flex: 1;
 }
 
