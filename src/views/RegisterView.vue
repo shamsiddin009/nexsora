@@ -113,7 +113,7 @@
                 :class="{ 'chip-active': form.specialty.includes(cat.value) }"
                 @click="toggleSpecialty(cat.value)"
               >
-                <span class="chip-emoji">{{ cat.icon }}</span>
+                <component :is="cat.icon" :size="16" class="chip-icon-svg" />
                 <span>{{ cat.label }}</span>
                 <CheckCircle v-if="form.specialty.includes(cat.value)" :size="13" class="chip-check" />
               </button>
@@ -290,7 +290,7 @@
                 :class="{ 'chip-active': form.specialty.includes(cat.value) }"
                 @click="toggleSpecialty(cat.value)"
               >
-                <span class="chip-emoji">{{ cat.icon }}</span>
+                <component :is="cat.icon" :size="16" class="chip-icon-svg" />
                 <span>{{ cat.label }}</span>
                 <CheckCircle v-if="form.specialty.includes(cat.value)" :size="13" class="chip-check" />
               </button>

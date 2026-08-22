@@ -16,13 +16,19 @@
             {{ selectedOption.icon }}
           </span>
           <component
+            v-else-if="selectedOption?.icon"
+            :is="selectedOption.icon"
+            :size="17"
+            class="trigger-icon-svg"
+          />
+          <component
             v-else-if="leadingIconComponent"
             :is="leadingIconComponent"
             :size="17"
             class="trigger-icon-svg"
           />
-          <span v-else-if="selectedOption?.icon" class="trigger-emoji">
-            {{ selectedOption.icon }}
+          <span v-else-if="leadingIcon && isEmoji(leadingIcon)" class="trigger-emoji">
+            {{ leadingIcon }}
           </span>
         </div>
 

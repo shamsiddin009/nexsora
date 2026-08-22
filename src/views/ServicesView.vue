@@ -139,6 +139,11 @@
             <span>Xarita</span>
           </button>
         </div>
+
+        <router-link to="/services/new" class="btn btn-primary btn-sm add-service-btn">
+          <Plus :size="14" />
+          <span>Xizmat Qo'shish</span>
+        </router-link>
       </div>
 
       <!-- MAP VIEW -->
@@ -408,10 +413,6 @@ function resetFilters() {
 }
 
 onMounted(() => {
-  if (authStore.isCraftsman) {
-    router.replace('/jobs')
-    return
-  }
   loadAllServices()
 })
 </script>
@@ -957,6 +958,18 @@ onMounted(() => {
   background: var(--color-surface);
   color: var(--color-primary-light);
   box-shadow: var(--shadow-sm);
+}
+
+.add-service-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 10px;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .map-view-container {

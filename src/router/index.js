@@ -77,10 +77,6 @@ router.beforeEach(async (to, from, next) => {
     next({ name: 'login', query: { redirect: to.fullPath } })
   } else if (to.meta.guestOnly && authStore.isAuthenticated) {
     next({ name: 'dashboard' })
-  } else if ((to.path === '/my-services' || to.path === '/services/new') && authStore.isClient) {
-    next({ path: '/my-jobs' })
-  } else if ((to.path === '/my-jobs' || to.path === '/jobs/new') && authStore.isCraftsman) {
-    next({ path: '/services/new' })
   } else {
     next()
   }

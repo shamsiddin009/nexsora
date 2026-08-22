@@ -60,7 +60,7 @@
                   :class="{ 'active': filters.category === cat.value }"
                   @click="filters.category = cat.value; fetchJobs()"
                 >
-                  <span class="cat-icon-emoji">{{ cat.icon }}</span>
+                  <component :is="cat.icon" :size="16" class="cat-icon-svg" />
                   <span>{{ cat.label }}</span>
                 </button>
               </div>

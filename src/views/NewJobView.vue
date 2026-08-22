@@ -303,10 +303,6 @@ const buildingDetails = ref({
 })
 
 onMounted(() => {
-  if (authStore.isCraftsman) {
-    router.replace('/services/new')
-    return
-  }
   if (route.query.type === 'building' || route.query.category === 'Quruvchi & Brigada') {
     setProjectType('building')
   } else if (route.query.category) {
