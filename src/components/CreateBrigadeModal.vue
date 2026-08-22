@@ -56,9 +56,12 @@
         <div class="form-row-2">
           <div class="form-group">
             <label class="input-label">Shahar / Viloyat:</label>
-            <select v-model="form.city" class="select-clean">
-              <option v-for="c in UZ_CITIES" :key="c" :value="c">{{ c }}</option>
-            </select>
+            <CustomSelect
+              v-model="form.city"
+              :options="CITY_OPTIONS"
+              placeholder="Shahar tanlang"
+              search-placeholder="Shaharni qidirish..."
+            />
           </div>
           <div class="form-group">
             <label class="input-label">Jamoa a'zolari soni (Kishi):</label>
@@ -187,10 +190,11 @@
 <script setup>
 import { ref } from 'vue'
 import { Users, X, Check, Search, UserPlus, Link2 } from 'lucide-vue-next'
-import { UZ_CITIES, getInitials } from '../utils'
+import { UZ_CITIES, CITY_OPTIONS, getInitials } from '../utils'
 import { supabase } from '../services/supabase'
 import { useAuthStore } from '../stores/auth'
 import { useToast } from '../composables/useToast'
+import CustomSelect from './CustomSelect.vue'
 
 defineProps({
   isOpen: { type: Boolean, default: false }

@@ -54,21 +54,25 @@
           <!-- Filters Row -->
           <div class="filters-row">
             <div class="filter-item">
-              <span class="filter-label">Shahar:</span>
-              <select v-model="selectedCity" class="select-clean">
-                <option value="">Barcha hududlar</option>
-                <option v-for="c in UZ_CITIES" :key="c" :value="c">{{ c }}</option>
-              </select>
+              <span class="filter-label"><MapPin :size="14" /> Shahar:</span>
+              <CustomSelect
+                v-model="selectedCity"
+                :options="[{ value: '', label: 'Barcha hududlar', icon: MapPin }, ...CITY_OPTIONS]"
+                placeholder="Barcha hududlar"
+                search-placeholder="Shaharni qidirish..."
+                size="sm"
+                clearable
+              />
             </div>
 
             <div class="filter-item">
-              <span class="filter-label">Jamoa hajmi:</span>
-              <select v-model="selectedSize" class="select-clean">
-                <option value="all">Barchasi</option>
-                <option value="small">Kichik (2 - 5 kishi)</option>
-                <option value="medium">O'rta (6 - 12 kishi)</option>
-                <option value="large">Katta (13+ kishi)</option>
-              </select>
+              <span class="filter-label"><Users :size="14" /> Jamoa hajmi:</span>
+              <CustomSelect
+                v-model="selectedSize"
+                :options="SIZE_OPTIONS"
+                placeholder="Jamoa hajmi"
+                size="sm"
+              />
             </div>
           </div>
         </div>
@@ -230,13 +234,20 @@ import {
   BadgeCheck, Star, Award, Phone, Briefcase, Wrench,
   Layers, Home, Paintbrush, Grid, Building, Hammer, Sparkles
 } from 'lucide-vue-next'
-import { UZ_CITIES } from '../utils'
+import { UZ_CITIES, CITY_OPTIONS } from '../utils'
 import { SAMPLE_BRIGADES } from '../data/sampleBrigades'
 import { useAuthStore } from '../stores/auth'
 import CreateBrigadeModal from '../components/CreateBrigadeModal.vue'
+import CustomSelect from '../components/CustomSelect.vue'
 
 const authStore = useAuthStore()
 
+const SIZE_OPTIONS = [
+  { value: 'all', label: 'Barchasi', icon: Users },
+  { value: 'small', label: 'Kichik (2 - 5 kishi)', icon: Users },
+  { value: 'medium', label: "O'rta (6 - 12 kishi)", icon: Users },
+  { value: 'large', label: 'Katta (13+ kishi)', icon: Users },
+]
 
 const searchQuery = ref('')
 const selectedCity = ref('')

@@ -17,15 +17,13 @@
             @input="$emit('update:searchQuery', $event.target.value)"
           />
         </div>
-        <select
-          :value="roleFilter"
-          class="select-clean"
-          @change="$emit('update:roleFilter', $event.target.value)"
-        >
-          <option value="all">Barcha rollar</option>
-          <option value="craftsman">Faqat Ustalar</option>
-          <option value="client">Faqat Mijozlar</option>
-        </select>
+        <CustomSelect
+          :model-value="roleFilter"
+          :options="ROLE_OPTIONS"
+          placeholder="Rol bo'yicha"
+          size="sm"
+          @update:model-value="$emit('update:roleFilter', $event)"
+        />
       </div>
     </div>
 
@@ -108,6 +106,13 @@
 <script setup>
 import { Search, PlusCircle, Ban, Users, Wrench, User, CheckCircle2 } from 'lucide-vue-next'
 import { formatPrice } from '../../utils'
+import CustomSelect from '../CustomSelect.vue'
+
+const ROLE_OPTIONS = [
+  { value: 'all', label: 'Barcha rollar', icon: Users },
+  { value: 'craftsman', label: 'Faqat Ustalar', icon: Wrench },
+  { value: 'client', label: 'Faqat Mijozlar', icon: User },
+]
 
 defineProps({
   users: { type: Array, required: true },

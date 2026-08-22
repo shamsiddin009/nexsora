@@ -44,24 +44,21 @@
           <div class="form-row-2">
             <div class="form-group">
               <label class="input-label">Kategoriya:</label>
-              <select v-model="selectedCategory" class="select-clean">
-                <option value="Elektrik">Elektrik</option>
-                <option value="Santexnik">Santexnik</option>
-                <option value="Ta'mirchi">Ta'mirchi / Quruvchi</option>
-                <option value="Mebel">Mebel yasash / yig'ish</option>
-                <option value="Konditsioner">Konditsioner & Sovutish</option>
-                <option value="Tozalash">Tozalash / Cleaning</option>
-                <option value="Boshqa">Boshqa soha</option>
-              </select>
+              <CustomSelect
+                v-model="selectedCategory"
+                :options="CATEGORY_OPTIONS"
+                placeholder="Kategoriya tanlang"
+                search-placeholder="Kategoriyani qidirish..."
+              />
             </div>
 
             <div class="form-group">
               <label class="input-label">Ish hajmi va qiyinligi:</label>
-              <select v-model="complexityLevel" class="select-clean">
-                <option value="simple">Oddiy (1-3 soatlik ish)</option>
-                <option value="medium">O'rtacha (1-2 kunlik)</option>
-                <option value="complex">Katta / Murakkab (Kapital ta'mir)</option>
-              </select>
+              <CustomSelect
+                v-model="complexityLevel"
+                :options="COMPLEXITY_OPTIONS"
+                placeholder="Qiyinlik darajasi"
+              />
             </div>
           </div>
 
@@ -130,8 +127,15 @@
 <script setup>
 import { ref } from 'vue'
 import { Sparkles, X, Wrench, Clock, ShieldCheck, Users, Check, Target, Lightbulb } from 'lucide-vue-next'
-import { formatPrice } from '../utils'
+import { formatPrice, CATEGORY_OPTIONS } from '../utils'
 import { useToast } from '../composables/useToast'
+import CustomSelect from './CustomSelect.vue'
+
+const COMPLEXITY_OPTIONS = [
+  { value: 'simple', label: 'Oddiy (1-3 soatlik ish)', icon: Clock },
+  { value: 'medium', label: "O'rtacha (1-2 kunlik)", icon: Clock },
+  { value: 'complex', label: 'Katta / Murakkab (Kapital ta\'mir)', icon: ShieldCheck },
+]
 
 const props = defineProps({
   isOpen: { type: Boolean, default: false },

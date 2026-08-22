@@ -115,13 +115,13 @@
 
               <!-- Sorting Dropdown -->
               <div class="sort-selector-box">
-                <span class="sort-label">Saralash:</span>
-                <select v-model="sortBy" class="select-clean">
-                  <option value="newest">Eng yangi e'lonlar</option>
-                  <option value="budget_desc">Yuqori byudjet</option>
-                  <option value="budget_asc">Qulay byudjet</option>
-                  <option value="urgent">Shoshilinch</option>
-                </select>
+                <span class="sort-label"><ArrowUpDown :size="13" /> Saralash:</span>
+                <CustomSelect
+                  v-model="sortBy"
+                  :options="SORT_OPTIONS"
+                  placeholder="Saralash"
+                  size="sm"
+                />
               </div>
             </div>
 
@@ -346,11 +346,18 @@ import { formatPrice, formatRelativeTime, getInitials, CATEGORY_OPTIONS, CITY_OP
 import {
   Plus, Search, Calendar, Briefcase,
   SlidersHorizontal, Zap, ShieldCheck, Sparkles, Filter, CheckCircle2, RotateCcw, Heart,
-  Flame, Gem, MapPin, Mail, Coins, ChevronLeft, ChevronRight
+  Flame, Gem, MapPin, Mail, Coins, ChevronLeft, ChevronRight,
+  Clock, TrendingUp, TrendingDown, ArrowUpDown
 } from 'lucide-vue-next'
 
-
 import { SAMPLE_CLIENT_JOBS } from '../data/sampleJobs'
+
+const SORT_OPTIONS = [
+  { value: 'newest', label: "Eng yangi e'lonlar", icon: Clock },
+  { value: 'budget_desc', label: "Yuqori byudjet", icon: TrendingUp },
+  { value: 'budget_asc', label: "Qulay byudjet", icon: TrendingDown },
+  { value: 'urgent', label: "Shoshilinch", icon: Flame },
+]
 
 const bookmarkStore = useBookmarkStore()
 
@@ -928,6 +935,23 @@ onUnmounted(() => {
 .feed-count {
   font-size: 0.85rem;
   color: var(--color-text-2);
+}
+
+.sort-selector-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 240px;
+}
+
+.sort-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 /* Kwork Job Card */
