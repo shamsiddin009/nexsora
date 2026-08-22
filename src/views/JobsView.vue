@@ -82,19 +82,21 @@
                   <label class="input-label">Byudjet (so'm)</label>
                   <div class="budget-range-inputs">
                     <input
-                      v-model="filters.minBudget"
-                      type="number"
-                      placeholder="Min"
+                      :value="formatNumberWithSpaces(filters.minBudget)"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="Min (so'm)"
                       class="input input-sm"
-                      @change="fetchJobs"
+                      @input="filters.minBudget = parseNumberFromSpaces($event.target.value); fetchJobs()"
                     />
                     <span>—</span>
                     <input
-                      v-model="filters.maxBudget"
-                      type="number"
-                      placeholder="Max"
+                      :value="formatNumberWithSpaces(filters.maxBudget)"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="Max (so'm)"
                       class="input input-sm"
-                      @change="fetchJobs"
+                      @input="filters.maxBudget = parseNumberFromSpaces($event.target.value); fetchJobs()"
                     />
                   </div>
                 </div>
@@ -351,7 +353,10 @@ import CustomSelect from '../components/CustomSelect.vue'
 import { useAuthStore } from '../stores/auth'
 import { useBookmarkStore } from '../stores/bookmarkStore'
 import { supabase } from '../services/supabase'
-import { formatPrice, formatRelativeTime, getInitials, CATEGORY_OPTIONS, CITY_OPTIONS, JOB_CATEGORIES, UZ_CITIES, debounce } from '../utils'
+import {
+  formatPrice, formatRelativeTime, getInitials, CATEGORY_OPTIONS, CITY_OPTIONS,
+  JOB_CATEGORIES, UZ_CITIES, debounce, formatNumberWithSpaces, parseNumberFromSpaces
+} from '../utils'
 import {
   Plus, Search, Calendar, Briefcase,
   SlidersHorizontal, Zap, ShieldCheck, Sparkles, Filter, CheckCircle2, RotateCcw, Heart,

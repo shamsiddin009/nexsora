@@ -136,7 +136,15 @@
                 <label class="input-label">Telefon raqam</label>
                 <div class="input-icon-wrapper">
                   <Phone :size="16" class="input-icon" />
-                  <input v-model="form.phone" class="input" placeholder="+998 90 000 00 00" />
+                  <input
+                    :value="form.phone"
+                    type="tel"
+                    inputmode="tel"
+                    maxlength="19"
+                    class="input"
+                    placeholder="+998 (90) 123-45-67"
+                    @input="form.phone = formatUzbekPhone($event.target.value)"
+                  />
                 </div>
               </div>
             </div>
@@ -236,16 +244,38 @@
 
               <div class="row">
                 <div class="input-group">
-                  <label class="input-label">Tajriba (yil)</label>
-                  <input v-model="form.experience_yrs" type="number" min="0" class="input" placeholder="Masalan: 5" />
+                  <label class="input-label">Tajriba (yil, max 99)</label>
+                  <input
+                    :value="form.experience_yrs"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="2"
+                    class="input"
+                    placeholder="Masalan: 5"
+                    @input="handleExperienceInput"
+                  />
                 </div>
                 <div class="input-group">
                   <label class="input-label">Min xizmat narxi (so'm)</label>
-                  <input v-model="form.price_min" type="number" class="input" placeholder="50,000" />
+                  <input
+                    :value="formatNumberWithSpaces(form.price_min)"
+                    type="text"
+                    inputmode="numeric"
+                    class="input"
+                    placeholder="50 000"
+                    @input="form.price_min = parseNumberFromSpaces($event.target.value)"
+                  />
                 </div>
                 <div class="input-group">
                   <label class="input-label">Max xizmat narxi (so'm)</label>
-                  <input v-model="form.price_max" type="number" class="input" placeholder="500,000" />
+                  <input
+                    :value="formatNumberWithSpaces(form.price_max)"
+                    type="text"
+                    inputmode="numeric"
+                    class="input"
+                    placeholder="500 000"
+                    @input="form.price_max = parseNumberFromSpaces($event.target.value)"
+                  />
                 </div>
               </div>
             </template>
@@ -366,7 +396,11 @@ import CustomSelect from '../components/CustomSelect.vue'
 import { useAuthStore } from '../stores/auth'
 import { supabase } from '../services/supabase'
 import { useTheme } from '../composables/useTheme'
-import { CATEGORY_OPTIONS, CITY_OPTIONS, JOB_CATEGORIES, UZ_CITIES, getInitials } from '../utils'
+import {
+  CATEGORY_OPTIONS, CITY_OPTIONS, JOB_CATEGORIES, UZ_CITIES, getInitials,
+  formatNumberWithSpaces, parseNumberFromSpaces
+} from '../utils'
+import { formatUzbekPhone } from '../utils/phoneMask'
 import {
   User, Phone, MapPin, Save, Lock,
   Sun, Moon, ShieldCheck, CheckCircle, CheckCircle2,
@@ -377,6 +411,10 @@ import { sendTelegramNotification } from '../services/telegramNotifier'
 
 const authStore = useAuthStore()
 const { currentTheme, toggleTheme } = useTheme()
+
+function handleExperienceInput(e) {
+  form.value.experience_yrs = String(e.target.value).replace(/\D/g, '').slice(0, 2)
+}
 
 const activeTab = ref('profile')
 

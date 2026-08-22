@@ -1,6 +1,20 @@
+export function formatNumberWithSpaces(num) {
+  if (num === null || num === undefined || num === '') return ''
+  const str = String(num).replace(/\D/g, '')
+  if (!str) return ''
+  return str.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+}
+
+export function parseNumberFromSpaces(val) {
+  if (!val) return 0
+  const clean = String(val).replace(/\D/g, '')
+  return clean ? parseInt(clean, 10) : 0
+}
+
 export function formatPrice(amount) {
   if (!amount) return '0 so\'m'
-  return new Intl.NumberFormat('uz-UZ').format(amount) + ' so\'m'
+  const num = typeof amount === 'number' ? amount : parseNumberFromSpaces(amount)
+  return formatNumberWithSpaces(num) + ' so\'m'
 }
 
 export function formatDate(dateStr) {

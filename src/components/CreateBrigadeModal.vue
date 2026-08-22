@@ -44,11 +44,14 @@
           <div class="form-group">
             <label class="input-label">Aloqa Telefoni:</label>
             <input
-              v-model="form.leaderPhone"
-              type="text"
+              :value="form.leaderPhone"
+              type="tel"
+              inputmode="tel"
+              maxlength="19"
               required
               class="input"
-              placeholder="+998 90 123 45 67"
+              placeholder="+998 (90) 123-45-67"
+              @input="form.leaderPhone = formatUzbekPhone($event.target.value)"
             />
           </div>
         </div>
@@ -191,6 +194,7 @@
 import { ref } from 'vue'
 import { Users, X, Check, Search, UserPlus, Link2 } from 'lucide-vue-next'
 import { UZ_CITIES, CITY_OPTIONS, getInitials } from '../utils'
+import { formatUzbekPhone } from '../utils/phoneMask'
 import { supabase } from '../services/supabase'
 import { useAuthStore } from '../stores/auth'
 import { useToast } from '../composables/useToast'

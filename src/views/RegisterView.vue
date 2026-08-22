@@ -121,18 +121,40 @@
           </div>
 
           <div class="input-group">
-            <label class="input-label">Tajriba (yillarda)</label>
-            <input v-model="form.experienceYrs" type="number" min="0" placeholder="Masalan: 5" class="input" />
+            <label class="input-label">Tajriba (yil, max 99)</label>
+            <input
+              :value="form.experienceYrs"
+              type="text"
+              inputmode="numeric"
+              maxlength="2"
+              placeholder="Masalan: 5"
+              class="input"
+              @input="form.experienceYrs = String($event.target.value).replace(/\D/g, '').slice(0, 2)"
+            />
           </div>
 
           <div class="price-range">
             <div class="input-group">
               <label class="input-label">Min narx (so'm)</label>
-              <input v-model="form.priceMin" type="number" placeholder="50,000" class="input" />
+              <input
+                :value="formatNumberWithSpaces(form.priceMin)"
+                type="text"
+                inputmode="numeric"
+                placeholder="50 000"
+                class="input"
+                @input="form.priceMin = parseNumberFromSpaces($event.target.value)"
+              />
             </div>
             <div class="input-group">
               <label class="input-label">Max narx (so'm)</label>
-              <input v-model="form.priceMax" type="number" placeholder="500,000" class="input" />
+              <input
+                :value="formatNumberWithSpaces(form.priceMax)"
+                type="text"
+                inputmode="numeric"
+                placeholder="500 000"
+                class="input"
+                @input="form.priceMax = parseNumberFromSpaces($event.target.value)"
+              />
             </div>
           </div>
         </template>
@@ -298,18 +320,40 @@
           </div>
 
           <div class="input-group">
-            <label class="input-label">Tajriba (yillarda)</label>
-            <input v-model="form.experienceYrs" type="number" min="0" placeholder="Masalan: 5" class="input" />
+            <label class="input-label">Tajriba (yil, max 99)</label>
+            <input
+              :value="form.experienceYrs"
+              type="text"
+              inputmode="numeric"
+              maxlength="2"
+              placeholder="Masalan: 5"
+              class="input"
+              @input="form.experienceYrs = String($event.target.value).replace(/\D/g, '').slice(0, 2)"
+            />
           </div>
 
           <div class="price-range">
             <div class="input-group">
               <label class="input-label">Min narx (so'm)</label>
-              <input v-model="form.priceMin" type="number" placeholder="50,000" class="input" />
+              <input
+                :value="formatNumberWithSpaces(form.priceMin)"
+                type="text"
+                inputmode="numeric"
+                placeholder="50 000"
+                class="input"
+                @input="form.priceMin = parseNumberFromSpaces($event.target.value)"
+              />
             </div>
             <div class="input-group">
               <label class="input-label">Max narx (so'm)</label>
-              <input v-model="form.priceMax" type="number" placeholder="500,000" class="input" />
+              <input
+                :value="formatNumberWithSpaces(form.priceMax)"
+                type="text"
+                inputmode="numeric"
+                placeholder="500 000"
+                class="input"
+                @input="form.priceMax = parseNumberFromSpaces($event.target.value)"
+              />
             </div>
           </div>
         </template>
@@ -346,7 +390,10 @@ import {
 import { useAuthStore } from '../stores/auth'
 import { useToast } from '../composables/useToast'
 import { supabase } from '../services/supabase'
-import { CATEGORY_OPTIONS, CITY_OPTIONS } from '../utils'
+import {
+  CATEGORY_OPTIONS, CITY_OPTIONS,
+  formatNumberWithSpaces, parseNumberFromSpaces
+} from '../utils'
 import { formatUzbekPhone } from '../utils/phoneMask'
 
 const router = useRouter()

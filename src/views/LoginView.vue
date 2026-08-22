@@ -179,6 +179,7 @@ import { ref, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { Wrench, Mail, Lock, Eye, EyeOff, Smartphone, Phone, KeyRound, Send, Lightbulb } from 'lucide-vue-next'
 import { useAuthStore } from '../stores/auth'
+import { formatUzbekPhone } from '../utils/phoneMask'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -210,11 +211,7 @@ function switchAuthMethod(method) {
 }
 
 function formatPhoneInput(e) {
-  let val = e.target.value.replace(/[^\d+]/g, '')
-  if (!val.startsWith('+998')) {
-    val = '+998 ' + val.replace(/^\+?998?/, '')
-  }
-  phoneForm.value.phone = val
+  phoneForm.value.phone = formatUzbekPhone(e.target.value)
 }
 
 function startOtpTimer() {
