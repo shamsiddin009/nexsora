@@ -11,6 +11,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const SUBSCRIBERS_FILE = path.join(__dirname, '../public/telegram-subscribers.json');
+const OTPS_FILE = path.join(__dirname, '../public/telegram-otps.json');
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8881393508:AAGM2zhdst1GLFNfplK2NuUfgNsWgKh43Ko';
 const API_URL = `https://api.telegram.org/bot${BOT_TOKEN}`;
@@ -21,6 +22,48 @@ const otpStore = new Map();
 const userPhoneMap = new Map();
 // Mapping: chatId -> role ('craftsman' | 'client')
 const userRoleMap = new Map();
+
+// Helper to save OTPs to JSON file for frontend access
+function saveOtpRecord(phone, otp, chatId) {
+  const pClean = cleanPhone(phone);
+  const digits = phone.replace(/\D/g, '');
+  const otpObj = {
+    code: String(otp).trim(),
+    expiresAt: Date.now() + 10 * 60 * 1000, // 10 minutes valid
+    chatId: String(chatId),
+    createdAt: new Date().toISOString()
+  };
+
+  otpStore.set(pClean, otpObj);
+  otpStore.set(digits, otpObj);
+  otpStore.set('+' + digits, otpObj);
+  userPhoneMap.set(String(chatId), pClean);
+
+  try {
+    let otps = {};
+    if (fs.existsSync(OTPS_FILE)) {
+      try {
+        otps = JSON.parse(fs.readFileSync(OTPS_FILE, 'utf-8'));
+      } catch (e) {}
+    }
+    // Clean expired
+    const now = Date.now();
+    const cleaned = {};
+    for (const [p, val] of Object.entries(otps)) {
+      if (val && val.expiresAt > now) {
+        cleaned[p] = val;
+      }
+    }
+    cleaned[pClean] = otpObj;
+    cleaned[digits] = otpObj;
+    cleaned['+' + digits] = otpObj;
+
+    fs.writeFileSync(OTPS_FILE, JSON.stringify(cleaned, null, 2), 'utf-8');
+    console.log(`💾 [OTP Saqlandi]: ${pClean} -> Kod: ${otp}`);
+  } catch (err) {
+    console.error('Failed to save OTP to file:', err.message);
+  }
+}
 
 // Helper to read subscribers file
 function getSubscribers() {
@@ -45,7 +88,7 @@ function saveSubscriber(chatId, role, name, specialties = []) {
       // Remove from clients if exists
       subs.clients = (subs.clients || []).filter(c => String(c.chatId) !== strId);
       // Upsert into craftsmen
-      const existingIdx = (subs.craftsmens || subs.craftsmen || []).findIndex(c => String(c.chatId) !== strId ? false : true);
+      const existingIdx = (subs.craftsmens || subs.craftsmen || []).findIndex(c => String(c.chatId) === strId);
       const defaultSpecs = ['Santexnik', 'Santexnika', 'Elektrik', 'Elektr', 'Pardozlash', 'Qurilish', 'Mebel', 'Konditsioner', 'Tozalash', 'Texnika', 'Barchasi'];
       const finalSpecs = specialties.length > 0 ? specialties : defaultSpecs;
       
@@ -122,7 +165,7 @@ function generateOtpCode() {
 }
 
 function cleanPhone(rawPhone) {
-  let cleaned = rawPhone.replace(/\D/g, '');
+  let cleaned = String(rawPhone || '').replace(/\D/g, '');
   if (!cleaned.startsWith('998') && cleaned.length === 9) {
     cleaned = '998' + cleaned;
   }
@@ -164,21 +207,14 @@ async function handleMessage(msg) {
 
   if (!chatId) return;
 
-  console.log(`📩 Xabar keldi [${chatId} | ${firstName}]: ${text || (msg.contact ? '[Contact]' : '')}`);
+  console.log(`📩 Xabar keldi [${chatId} | ${firstName}]: ${text || (msg.contact ? '[Contact: ' + msg.contact.phone_number + ']' : '')}`);
 
-  // 1. User shared contact (OTP Verification)
+  // 1. User shared contact button (OTP Verification)
   if (msg.contact) {
     const phone = cleanPhone(msg.contact.phone_number);
     const otp = generateOtpCode();
     
-    otpStore.set(phone, {
-      code: otp,
-      expiresAt: Date.now() + 5 * 60 * 1000,
-      chatId
-    });
-    userPhoneMap.set(chatId, phone);
-
-    console.log(`✅ [OTP]: Telefon: ${phone} -> Kod: ${otp}`);
+    saveOtpRecord(phone, otp, chatId);
 
     const currentRole = userRoleMap.get(String(chatId));
     const kb = currentRole === 'craftsman' ? CRAFTSMAN_KEYBOARD : (currentRole === 'client' ? CLIENT_KEYBOARD : MAIN_KEYBOARD);
@@ -188,31 +224,56 @@ async function handleMessage(msg) {
       text: `🎉 <b>Telefon raqamingiz muvaffaqiyatli qabul qilindi!</b>\n\n` +
             `📱 <b>Raqam:</b> <code>${phone}</code>\n` +
             `🔐 <b>Tasdiqlash kodingiz:</b> <code>${otp}</code>\n\n` +
-            `Ushbu 4 xonali kodni saytdagi maydonga kiriting (muddati: 5 daqiqa).\n\n` +
-            `🌐 <a href="http://localhost:5173">Nexsora Platformasiga qaytish</a>`,
+            `Ushbu 4 xonali kodni saytdagi maydonga kiriting (muddati: 10 daqiqa).\n\n` +
+            `🌐 <a href="http://localhost:5173">Nexsora Platformasiga o'tish</a>`,
       parse_mode: 'HTML',
       reply_markup: kb
     });
     return;
   }
 
-  // 2. /start command or '🔄 Rolni o'zgartirish'
+  // 2. User typed a phone number manually (e.g. +998901234567, 998901234567, 901234567)
+  const phoneRegex = /^(\+?998\s?\d{2}\s?\d{3}\s?\d{2}\s?\d{2}|\d{9}|\d{12})$/;
+  const cleanDigits = text.replace(/\D/g, '');
+  if (phoneRegex.test(text.replace(/\s+/g, '')) || (cleanDigits.length === 9 || (cleanDigits.length === 12 && cleanDigits.startsWith('998')))) {
+    const phone = cleanPhone(text);
+    const otp = generateOtpCode();
+
+    saveOtpRecord(phone, otp, chatId);
+
+    const currentRole = userRoleMap.get(String(chatId));
+    const kb = currentRole === 'craftsman' ? CRAFTSMAN_KEYBOARD : (currentRole === 'client' ? CLIENT_KEYBOARD : MAIN_KEYBOARD);
+
+    await callTelegram('sendMessage', {
+      chat_id: chatId,
+      text: `🔐 <b>Tasdiqlash kodi yaratildi!</b>\n\n` +
+            `📱 <b>Raqam:</b> <code>${phone}</code>\n` +
+            `🔑 <b>Tasdiqlash kodingiz:</b> <code>${otp}</code>\n\n` +
+            `Ushbu 4 xonali kodni saytdagi maydonga kiriting (muddati: 10 daqiqa).`,
+      parse_mode: 'HTML',
+      reply_markup: kb
+    });
+    return;
+  }
+
+  // 3. /start command or '🔄 Rolni o'zgartirish'
   if (text.startsWith('/start') || text.includes('Rolni o\'zgartirish') || text.includes('bosh menyu')) {
     await callTelegram('sendMessage', {
       chat_id: chatId,
       text: `👋 <b>Assalomu alaykum, ${firstName}!</b>\n\n` +
             `🏢 <b>Nexsora</b> — ustalar va buyurtmachilar xizmat birjasining rasmiy botiga xush kelibsiz!\n\n` +
             `🆔 <b>Sizning Telegram ID:</b> <code>${chatId}</code>\n\n` +
-            `📋 <b>Rolingizni tanlang:</b>\n` +
+            `📋 <b>Rolingizni tanlang yoki telefoningizni tasdiqlang:</b>\n` +
             `• <b>👷 Men Ustaman</b> — mijozlar joylagan yangi buyurtmalarni qabul qilish.\n` +
-            `• <b>👤 Men Mijozman</b> — e'lonlaringizga tushgan usta takliflarini olish.`,
+            `• <b>👤 Men Mijozman</b> — e'lonlaringizga tushgan usta takliflarini olish.\n` +
+            `• <b>📱 Telefon raqamni ulash (OTP)</b> — saytda ro'yxatdan o'tish uchun kod olish.`,
       parse_mode: 'HTML',
       reply_markup: MAIN_KEYBOARD
     });
     return;
   }
 
-  // 3. Craftsman role selection
+  // 4. Craftsman role selection
   if (text.includes('Ustaman') || text === '/usta' || text.includes('Usta yo\'riqnomasi')) {
     userRoleMap.set(String(chatId), 'craftsman');
     saveSubscriber(chatId, 'craftsman', firstName);
@@ -231,7 +292,7 @@ async function handleMessage(msg) {
     return;
   }
 
-  // 4. Client role selection
+  // 5. Client role selection
   if (text.includes('Mijozman') || text === '/mijoz' || text.includes('Mijoz yo\'riqnomasi')) {
     userRoleMap.set(String(chatId), 'client');
     saveSubscriber(chatId, 'client', firstName);
@@ -250,7 +311,7 @@ async function handleMessage(msg) {
     return;
   }
 
-  // 5. /id or '🆔 Mening ID raqamim' command
+  // 6. /id or '🆔 Mening ID raqamim' command
   if (text.startsWith('/id') || text.startsWith('/myid') || text.includes('ID')) {
     const role = userRoleMap.get(String(chatId)) === 'craftsman' ? '👷 Usta' : (userRoleMap.get(String(chatId)) === 'client' ? '👤 Mijoz' : 'Tanlanmagan');
     const kb = userRoleMap.get(String(chatId)) === 'craftsman' ? CRAFTSMAN_KEYBOARD : (userRoleMap.get(String(chatId)) === 'client' ? CLIENT_KEYBOARD : MAIN_KEYBOARD);
@@ -266,14 +327,39 @@ async function handleMessage(msg) {
     return;
   }
 
-  // 6. Default prompt
+  // 7. Requesting OTP code text prompt ("kod", "otp", "tasdiqlash")
+  if (text.toLowerCase().includes('kod') || text.toLowerCase().includes('otp') || text.toLowerCase().includes('tasdiq')) {
+    const existingPhone = userPhoneMap.get(String(chatId));
+    if (existingPhone) {
+      const otp = generateOtpCode();
+      saveOtpRecord(existingPhone, otp, chatId);
+      await callTelegram('sendMessage', {
+        chat_id: chatId,
+        text: `🔐 <b>Yangi tasdiqlash kodingiz:</b> <code>${otp}</code>\n` +
+              `📱 <b>Raqam:</b> <code>${existingPhone}</code>\n\n` +
+              `Ushbu kodni saytga kiriting (muddati: 10 daqiqa).`,
+        parse_mode: 'HTML'
+      });
+      return;
+    } else {
+      await callTelegram('sendMessage', {
+        chat_id: chatId,
+        text: `📱 Kod olish uchun pastdagi <b>«Telefon raqamni ulash (OTP)»</b> tugmasini bosing yoki telefon raqamingizni yozib yuboring (masalan: <code>+998901234567</code>).`,
+        parse_mode: 'HTML',
+        reply_markup: MAIN_KEYBOARD
+      });
+      return;
+    }
+  }
+
+  // 8. Default prompt
   const currentRole = userRoleMap.get(String(chatId));
   const kb = currentRole === 'craftsman' ? CRAFTSMAN_KEYBOARD : (currentRole === 'client' ? CLIENT_KEYBOARD : MAIN_KEYBOARD);
   await callTelegram('sendMessage', {
     chat_id: chatId,
     text: `👋 Salom <b>${firstName}</b>!\n\n` +
           `🆔 <b>Sizning Telegram ID:</b> <code>${chatId}</code>\n\n` +
-          `Kerakli bo'limni tanlash uchun pastdagi tugmalardan foydalaning:`,
+          `Saytda ro'yxatdan o'tish kodi olish uchun pastdagi <b>«📱 Telefon raqamni ulash (OTP)»</b> tugmasini bosing:`,
     parse_mode: 'HTML',
     reply_markup: kb
   });
@@ -306,15 +392,94 @@ async function startPolling() {
   }
 }
 
-// Health-check HTTP server for cloud deployments (Render, Railway, etc.)
+// Health-check & Verification HTTP Server
 const PORT = process.env.PORT || 3000;
 const server = http.createServer((req, res) => {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
+  const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+
+  // Endpoint 1: /api/verify-otp
+  if (parsedUrl.pathname === '/api/verify-otp') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      let phone = parsedUrl.searchParams.get('phone');
+      let code = parsedUrl.searchParams.get('code');
+
+      if (body) {
+        try {
+          const parsed = JSON.parse(body);
+          if (parsed.phone) phone = parsed.phone;
+          if (parsed.code) code = parsed.code;
+        } catch (e) {}
+      }
+
+      if (!phone || !code) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: false, valid: false, error: 'Phone and code are required' }));
+        return;
+      }
+
+      const pClean = cleanPhone(phone);
+      const digits = phone.replace(/\D/g, '');
+      const otpRecord = otpStore.get(pClean) || otpStore.get(digits) || otpStore.get('+' + digits);
+
+      if (otpRecord && String(otpRecord.code).trim() === String(code).trim() && otpRecord.expiresAt > Date.now()) {
+        console.log(`✅ [HTTP OTP Muvaffaqiyatli]: ${pClean} (Kod: ${code})`);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: true, valid: true, phone: pClean, chatId: otpRecord.chatId }));
+        return;
+      }
+
+      // Also check file if available
+      try {
+        if (fs.existsSync(OTPS_FILE)) {
+          const otps = JSON.parse(fs.readFileSync(OTPS_FILE, 'utf-8'));
+          const fileRecord = otps[pClean] || otps[digits] || otps['+' + digits];
+          if (fileRecord && String(fileRecord.code).trim() === String(code).trim() && fileRecord.expiresAt > Date.now()) {
+            console.log(`✅ [File OTP Muvaffaqiyatli]: ${pClean} (Kod: ${code})`);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ ok: true, valid: true, phone: pClean, chatId: fileRecord.chatId }));
+            return;
+          }
+        }
+      } catch (err) {}
+
+      console.warn(`❌ [OTP Noto'g'ri]: ${pClean} kiritildi: ${code}`);
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ ok: false, valid: false, error: "Tasdiqlash kodi noto'g'ri yoki muddati tugagan" }));
+    });
+    return;
+  }
+
+  // Endpoint 2: /api/active-otps
+  if (parsedUrl.pathname === '/api/active-otps') {
+    const list = {};
+    for (const [k, v] of otpStore.entries()) {
+      list[k] = { ...v, isExpired: v.expiresAt < Date.now() };
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'ok', otps: list }));
+    return;
+  }
+
+  // Health check default
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ status: 'ok', service: 'Nexsora Telegram Bot', timestamp: new Date().toISOString() }));
 });
 
 server.listen(PORT, () => {
-  console.log(`🌐 Health check server listening on port ${PORT}`);
+  console.log(`🌐 Bot Verification & Health-check Server listening on port ${PORT}`);
 });
 
 // Start bot
