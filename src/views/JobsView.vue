@@ -2,7 +2,7 @@
   <div class="birja-page-wrapper">
     <main class="public-content">
       <div class="birja-page">
-        <!-- Top Page Header & Connects Widget -->
+        <!-- Top Page Header -->
         <div class="birja-header-banner">
           <div class="header-title-box">
             <div class="title-with-badge">
@@ -12,26 +12,10 @@
             <p class="subtitle">Faol mijozlardan real buyurtmalar ro'yxati</p>
           </div>
 
-          <!-- Craftsman Connects Widget (Kwork Style) -->
-          <div class="connects-widget">
-            <div class="connects-left">
-              <div class="connects-label">
-                <span>Aloqalar (Limit)</span>
-                <span class="connects-count"><strong>28 tasi qoldi</strong> / 30 tadan</span>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill" style="width: 85%"></div>
-              </div>
-              <div class="connects-sub">To'ldirish sanasi: 21-avgust</div>
-            </div>
-            <div class="connects-actions">
-              <router-link v-if="authStore.isClient" to="/jobs/new" class="btn btn-primary btn-sm">
-                <Plus :size="16" /> E'lon joylash
-              </router-link>
-              <router-link v-else-if="!authStore.isAuthenticated" to="/register?role=client" class="btn btn-primary btn-sm">
-                <Plus :size="16" /> E'lon joylash
-              </router-link>
-            </div>
+          <div class="header-actions-box">
+            <router-link v-if="authStore.isClient || !authStore.isAuthenticated" to="/jobs/new" class="btn btn-primary btn-sm">
+              <Plus :size="16" /> E'lon joylash
+            </router-link>
           </div>
         </div>
 
@@ -214,7 +198,7 @@
 
             <!-- Jobs List (Kwork Card Design) -->
             <div v-else class="jobs-list">
-              <div v-for="job in sortedAndFilteredJobs" :key="job.id" class="kwork-job-card card">
+              <div v-for="job in paginatedJobs" :key="job.id" class="kwork-job-card card">
                 
                 <!-- Card Header: Title & Budget -->
                 <div class="card-top">
@@ -299,6 +283,50 @@
 
               </div>
             </div>
+
+            <!-- Pagination Controls (10 ta e'londan oshganda) -->
+            <div v-if="totalPages > 1" class="birja-pagination">
+              <div class="pagination-info">
+                <span>Jami <strong>{{ sortedAndFilteredJobs.length }}</strong> ta e'lon, <strong>{{ (currentPage - 1) * itemsPerPage + 1 }}–{{ Math.min(currentPage * itemsPerPage, sortedAndFilteredJobs.length) }}</strong> ko'rsatilmoqda</span>
+              </div>
+              <div class="pagination-controls">
+                <button
+                  type="button"
+                  class="page-btn page-nav"
+                  :disabled="currentPage === 1"
+                  @click="goToPage(currentPage - 1)"
+                  title="Oldingi sahifa"
+                >
+                  <ChevronLeft :size="16" />
+                  <span>Oldingi</span>
+                </button>
+
+                <div class="page-numbers">
+                  <button
+                    v-for="(page, idx) in displayedPages"
+                    :key="idx"
+                    type="button"
+                    class="page-btn"
+                    :class="{ 'active': page === currentPage, 'dots': page === '...' }"
+                    :disabled="page === '...'"
+                    @click="page !== '...' && goToPage(page)"
+                  >
+                    {{ page }}
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  class="page-btn page-nav"
+                  :disabled="currentPage === totalPages"
+                  @click="goToPage(currentPage + 1)"
+                  title="Keyingi sahifa"
+                >
+                  <span>Keyingi</span>
+                  <ChevronRight :size="16" />
+                </button>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -318,7 +346,7 @@ import { formatPrice, formatRelativeTime, getInitials, CATEGORY_OPTIONS, CITY_OP
 import {
   Plus, Search, Calendar, Briefcase,
   SlidersHorizontal, Zap, ShieldCheck, Sparkles, Filter, CheckCircle2, RotateCcw, Heart,
-  Flame, Gem, MapPin, Mail, Coins
+  Flame, Gem, MapPin, Mail, Coins, ChevronLeft, ChevronRight
 } from 'lucide-vue-next'
 
 
@@ -334,6 +362,9 @@ const jobs = ref([])
 const loading = ref(true)
 const sortBy = ref('newest')
 const activeQuickTag = ref('all')
+
+const currentPage = ref(1)
+const itemsPerPage = 10
 
 const filters = ref({
   q: route.query.q || '',
@@ -395,6 +426,40 @@ const sortedAndFilteredJobs = computed(() => {
   return list
 })
 
+const totalPages = computed(() => {
+  return Math.ceil(sortedAndFilteredJobs.value.length / itemsPerPage) || 1
+})
+
+const paginatedJobs = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  return sortedAndFilteredJobs.value.slice(start, start + itemsPerPage)
+})
+
+const displayedPages = computed(() => {
+  const total = totalPages.value
+  const current = currentPage.value
+  if (total <= 7) {
+    return Array.from({ length: total }, (_, i) => i + 1)
+  }
+  if (current <= 4) {
+    return [1, 2, 3, 4, 5, '...', total]
+  }
+  if (current >= total - 3) {
+    return [1, '...', total - 4, total - 3, total - 2, total - 1, total]
+  }
+  return [1, '...', current - 1, current, current + 1, '...', total]
+})
+
+function goToPage(page) {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+    window.scrollTo({ top: 120, behavior: 'smooth' })
+  }
+}
+
+watch([filters, activeQuickTag, sortBy], () => {
+  currentPage.value = 1
+}, { deep: true })
 
 watch(() => route.query.q, (newQ) => {
   filters.value.q = newQ || ''
@@ -626,56 +691,108 @@ onUnmounted(() => {
   margin-top: 4px;
 }
 
-/* Connects Widget */
-.connects-widget {
+/* Header Actions Box */
+.header-actions-box {
   display: flex;
   align-items: center;
-  gap: 24px;
-  background: var(--color-surface-2);
+  gap: 12px;
+}
+
+/* Birja Pagination Styles */
+.birja-pagination {
+  margin-top: 28px;
+  padding: 16px 20px;
+  background: var(--color-card);
   border: 1px solid var(--color-border);
   border-radius: 16px;
-  padding: 16px 20px;
-}
-
-.connects-left {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 220px;
-}
-
-.connects-label {
-  display: flex;
+  align-items: center;
   justify-content: space-between;
-  font-size: 0.78rem;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.pagination-info {
+  font-size: 0.86rem;
   color: var(--color-text-2);
 }
 
-.connects-count strong {
-  color: var(--color-success);
+.pagination-info strong {
+  color: var(--color-text);
+  font-weight: 700;
 }
 
-.progress-track {
-  height: 6px;
-  background: var(--color-border);
-  border-radius: 3px;
-  overflow: hidden;
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-success) 100%);
-  border-radius: 3px;
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.connects-sub {
-  font-size: 0.7rem;
+.page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.page-btn:hover:not(:disabled):not(.dots) {
+  background: var(--color-surface-2);
+  border-color: var(--color-primary);
+  color: var(--color-primary-light);
+  transform: translateY(-1px);
+}
+
+.page-btn.active {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.35);
+}
+
+.page-btn.dots {
+  background: transparent;
+  border-color: transparent;
+  cursor: default;
   color: var(--color-muted);
 }
 
-.connects-actions {
-  display: flex;
-  gap: 8px;
+.page-btn.page-nav {
+  gap: 6px;
+  padding: 0 14px;
+}
+
+.page-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 640px) {
+  .birja-pagination {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
 }
 
 /* Birja Layout Grid */
