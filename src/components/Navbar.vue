@@ -193,7 +193,7 @@
                   <div class="dropdown-divider"></div>
 
 
-                  <router-link to="/admin" class="dropdown-item admin-dropdown-item" @click="dropdownOpen = false">
+                  <router-link v-if="authStore.isAdmin" to="/admin" class="dropdown-item admin-dropdown-item" @click="dropdownOpen = false">
                     <ShieldCheck :size="16" class="text-primary" />
                     <span style="font-weight: 700">Super Admin Panel</span>
                     <span class="badge badge-primary" style="font-size: 0.65rem; margin-left: auto;">CRM</span>
