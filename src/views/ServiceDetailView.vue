@@ -26,7 +26,7 @@
             <img :src="service.cover_image" :alt="service.title" class="showcase-cover-img" />
             <div class="showcase-badges">
               <span class="badge badge-primary">{{ service.category }}</span>
-              <span class="badge badge-subtle">📍 {{ service.city }}</span>
+              <span class="badge badge-subtle"><MapPin :size="12" /> {{ service.city }}</span>
             </div>
           </div>
 
@@ -112,7 +112,7 @@
                 <h3 class="craftsman-fullname">{{ service.craftsman?.full_name }}</h3>
                 <div class="craftsman-specs">
                   <span class="badge badge-primary">{{ service.craftsman?.specialty || service.category }}</span>
-                  <span>📍 {{ service.craftsman?.city || service.city }}</span>
+                  <span class="city-pill"><MapPin :size="12" /> {{ service.craftsman?.city || service.city }}</span>
                 </div>
               </div>
             </div>
@@ -123,7 +123,7 @@
                 <span class="craft-stat-sub">Tajriba</span>
               </div>
               <div class="craft-stat">
-                <span class="craft-stat-val">⭐ {{ service.craftsman?.rating?.toFixed(1) || '5.0' }}</span>
+                <span class="craft-stat-val"><Star :size="14" fill="currentColor" class="star-icon-inline" /> {{ service.craftsman?.rating?.toFixed(1) || '5.0' }}</span>
                 <span class="craft-stat-sub">Reyting</span>
               </div>
               <div class="craft-stat">
@@ -197,7 +197,7 @@ import { supabase } from '../services/supabase'
 import { formatPrice, getInitials, toDeterministicUuid, generateUuid } from '../utils'
 import {
   Star, Clock, CheckCircle2, ShieldCheck, MessageCircle,
-  MessageSquare, Check, Wrench, Phone, Send
+  MessageSquare, Check, Wrench, Phone, Send, MapPin
 } from 'lucide-vue-next'
 import { SAMPLE_SERVICES } from '../data/sampleServices'
 
@@ -313,7 +313,7 @@ async function handleOrderService() {
       await supabase.from('notifications').insert({
         user_id: validCraftsmanId,
         type: 'new_message',
-        title: 'Yangi xizmat buyurtmasi! 💼',
+        title: 'Yangi xizmat buyurtmasi!',
         body: `${authStore.profile?.full_name || 'Mijoz'} "${service.value.title}" xizmatingiz bo'yicha murojaat qildi.`,
         link: `/chat/${chatId}`,
       })

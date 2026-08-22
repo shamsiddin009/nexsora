@@ -97,20 +97,15 @@
 
       <!-- 3-QADAM: Keyin esa summasini -->
       <div class="input-group">
-        <label class="input-label">
-          <DollarSign :size="14" /> Taklif summasi (so'mda) *
-        </label>
-        <div class="input-icon-wrapper">
-          <DollarSign :size="16" class="input-icon" />
-          <input
-            v-model="form.price"
-            type="number"
-            min="1000"
-            placeholder="Masalan: 150000"
-            class="input"
-            required
-          />
-        </div>
+        <CurrencyInput
+          v-model="form.price"
+          label="Taklif summasi"
+          placeholder="150 000"
+          :required="true"
+          :min="1000"
+          :quick-presets="[100000, 250000, 500000, 1000000]"
+          :step="25000"
+        />
       </div>
 
       <!-- 4-QADAM: Keyin ishni nomini kiritadi -->
@@ -168,6 +163,7 @@ import {
   DollarSign, Clock, Send, Briefcase, FileText,
   Wrench, MapPin, CheckCircle2
 } from 'lucide-vue-next'
+import CurrencyInput from './common/CurrencyInput.vue'
 import { supabase } from '../services/supabase'
 import { useAuthStore } from '../stores/auth'
 import { formatPrice, toDeterministicUuid, generateUuid } from '../utils'
@@ -291,7 +287,7 @@ async function handleSubmit() {
           id: generateUuid(),
           user_id: targetClientUid,
           type: 'new_offer',
-          title: "E'loningizga yangi taklif keldi! 📩",
+          title: "E'loningizga yangi taklif keldi!",
           body: notifBody,
           link: `/jobs/${validJobId}`,
           is_read: false,

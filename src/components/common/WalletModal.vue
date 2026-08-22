@@ -83,30 +83,15 @@
 
       <!-- TAB 1: TOP UP BALANCE -->
       <div v-if="activeTab === 'deposit'" class="tab-content">
-        <div class="amount-presets">
-          <button 
-            v-for="preset in [50000, 100000, 250000, 500000, 1000000]"
-            :key="preset"
-            :class="['preset-btn', { active: depositAmount === preset }]"
-            @click="depositAmount = preset"
-          >
-            {{ formatNum(preset) }}
-          </button>
-        </div>
-
         <div class="input-group">
-          <label class="input-label">Boshqa summa (so'm):</label>
-          <div class="input-icon-wrapper">
-            <DollarSign :size="18" class="input-icon" />
-            <input 
-              v-model.number="depositAmount"
-              type="number"
-              min="5000"
-              step="5000"
-              class="input"
-              placeholder="50000"
-            />
-          </div>
+          <CurrencyInput
+            v-model="depositAmount"
+            label="To'ldiriladigan summa"
+            placeholder="50 000"
+            :min="5000"
+            :step="25000"
+            :quick-presets="[50000, 100000, 250000, 500000, 1000000]"
+          />
         </div>
 
         <label class="input-label">To'lov tizimini tanlang:</label>
@@ -184,14 +169,14 @@
         </div>
 
         <div class="input-group">
-          <label class="input-label">Yechib olinadigan summa (so'm):</label>
-          <input 
-            v-model.number="withdrawAmount"
-            type="number"
-            min="10000"
-            :max="walletStore.balance"
-            class="input"
-            placeholder="100000"
+          <CurrencyInput
+            v-model="withdrawAmount"
+            label="Yechib olinadigan summa"
+            placeholder="100 000"
+            :min="10000"
+            :max="walletStore.balance || 100000000"
+            :step="25000"
+            :quick-presets="[50000, 100000, 250000, 500000]"
           />
         </div>
 
@@ -279,6 +264,7 @@ import {
   History, DollarSign, Lock, CreditCard, FileText 
 } from 'lucide-vue-next'
 import ReceiptModal from './ReceiptModal.vue'
+import CurrencyInput from './CurrencyInput.vue'
 import { useWalletStore } from '../../stores/walletStore'
 import { useAuthStore } from '../../stores/auth'
 import { paymentService } from '../../services/paymentService'

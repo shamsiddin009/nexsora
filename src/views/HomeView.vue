@@ -109,7 +109,7 @@
     <section v-if="!authStore.isAuthenticated" class="section registration-guide-section" id="guide">
       <div class="container">
         <div class="section-header text-center">
-          <span class="section-tag">💡 Yangi foydalanuvchilar uchun</span>
+          <span class="section-tag"><Lightbulb :size="14" /> Yangi foydalanuvchilar uchun</span>
           <h2>Ro'yxatdan o'tish bo'yicha qo'llanma</h2>
           <p>O'zingizga mos rolni tanlang va platformadan foydalanishni oson boshlang</p>
         </div>
@@ -146,7 +146,7 @@
               Ism, telefon raqamingiz, emailingiz va xavfsiz parolni kiriting. Ro'yxatdan o'tish 1 daqiqa vaqt oladi va mutlaqo bepul.
             </p>
             <div class="guide-tip">
-              💡 <em>Tavsiya:</em> Doimiy ishlatadigan telefon raqamingizni kiriting, ustalar siz bilan tez bog'lanishi oson bo'ladi.
+              <Lightbulb :size="15" class="tip-icon" /> <em>Tavsiya:</em> Doimiy ishlatadigan telefon raqamingizni kiriting, ustalar siz bilan tez bog'lanishi oson bo'ladi.
             </div>
           </div>
 
@@ -160,7 +160,7 @@
               <strong>[+ E'lon berish]</strong> orqali qanday ish kerakligini yozing yoki <strong>[Xizmatlar]</strong> bo'limidan tajribali ustalarni tanlang.
             </p>
             <div class="guide-tip">
-              🎯 Narx va muddatni ko'rsatsangiz, ustalar aniq va tezroq taklif beradi.
+              <Target :size="15" class="tip-icon" /> Narx va muddatni ko'rsatsangiz, ustalar aniq va tezroq taklif beradi.
             </div>
           </div>
 
@@ -174,7 +174,7 @@
               Kelib tushgan takliflar orasidan eng mos ustani qabul qiling, ichki chatda manzil va boshlash vaqtini kelishib ishni topshiring.
             </p>
             <div class="guide-tip">
-              ⭐ Ish tugagach, ustani baholab sharh qoldiring.
+              <Star :size="15" class="tip-icon" /> Ish tugagach, ustani baholab sharh qoldiring.
             </div>
           </div>
         </div>
@@ -191,7 +191,7 @@
               Ismingiz, mutaxassislik yo'nalishlaringiz (Santexnik, Elektrik, Mebel va h.k.) hamda tajriba yilingizni belgilang.
             </p>
             <div class="guide-tip">
-              💡 <em>Tavsiya:</em> Profilingizga o'z suratingizni qo'ysangiz, mijozlarda ishonch 2 barobar ortadi.
+              <Lightbulb :size="15" class="tip-icon" /> <em>Tavsiya:</em> Profilingizga o'z suratingizni qo'ysangiz, mijozlarda ishonch 2 barobar ortadi.
             </div>
           </div>
 
@@ -205,7 +205,7 @@
               <strong>[+ Xizmat qo'shish]</strong> orqali portfolio va narxlaringizni e'lon qiling yoki <strong>[Birja]</strong> bo'limidagi yangi mijozlar e'lonlariga o'z taklifingizni yuboring.
             </p>
             <div class="guide-tip">
-              ⚡ Birinchi bo'lib taklif yuborgan ustalarga buyurtma berish ehtimoli yuqori.
+              <Zap :size="15" class="tip-icon" /> Birinchi bo'lib taklif yuborgan ustalarga buyurtma berish ehtimoli yuqori.
             </div>
           </div>
 
@@ -219,7 +219,7 @@
               Mijoz bilan chatda kelishib ishni sifatli bajaring, ish tugagach mijozdan ijobiy baho oling va platformadagi yetakchi ustalar qatoriga kiring.
             </p>
             <div class="guide-tip">
-              ⭐ Har bir 5 yulduzli baho yangi mijozlar oqimini oshiradi.
+              <Star :size="15" class="tip-icon" /> Har bir 5 yulduzli baho yangi mijozlar oqimini oshiradi.
             </div>
           </div>
         </div>
@@ -269,7 +269,8 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import {
   Wrench, Zap, Droplets, Hammer, CheckCircle, Search, MapPin, Users,
-  FilePlus, Tag, MessageSquareCheck, UserCheck, Sparkles, ShieldCheck
+  FilePlus, Tag, MessageSquareCheck, UserCheck, Sparkles, ShieldCheck,
+  Lightbulb, Target, Star
 } from 'lucide-vue-next'
 
 const router = useRouter()

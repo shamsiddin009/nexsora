@@ -72,19 +72,14 @@
             <!-- Amount and Duration -->
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">Kelishilgan Byudjet (UZS)</label>
-                <div class="input-with-currency">
-                  <input
-                    v-model.number="form.amount"
-                    type="number"
-                    min="20000"
-                    step="10000"
-                    class="form-input"
-                    placeholder="500000"
-                    required
-                  />
-                  <span class="currency-tag">so'm</span>
-                </div>
+                <CurrencyInput
+                  v-model="form.amount"
+                  label="Kelishilgan Byudjet"
+                  placeholder="500 000"
+                  :min="20000"
+                  :step="50000"
+                  :quick-presets="[100000, 300000, 500000, 1000000]"
+                />
               </div>
 
               <div class="form-group">
@@ -280,6 +275,7 @@ import {
   ShieldCheck, Lock, X, Award, Sparkles, Wallet,
   FileText, QrCode, CheckCircle2, Printer
 } from 'lucide-vue-next'
+import CurrencyInput from '../common/CurrencyInput.vue'
 import { escrowService } from '../../services/escrow'
 import { contractPdfService } from '../../services/contractPdfService'
 import { useAuthStore } from '../../stores/auth'

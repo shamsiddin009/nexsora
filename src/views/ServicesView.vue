@@ -3,7 +3,7 @@
     <!-- Hero Banner -->
     <section class="services-hero">
       <div class="container hero-content">
-        <span class="hero-tag">✨ Ustalarning Tayyor Xizmatlari</span>
+        <span class="hero-tag"><Sparkles :size="14" /> Ustalarning Tayyor Xizmatlari</span>
         <h1 class="hero-title">Tajribali ustalardan <span class="text-gradient">tayyor xizmatlar</span> va takliflar</h1>
         <p class="hero-desc">
           O'zingizga kerakli xizmatni tanlang, usta bilan to'g'ridan-to'g'ri bog'laning va ishni sifatli bajartiring.
@@ -145,10 +145,10 @@
       <div v-if="viewMode === 'map'" class="map-view-container card">
         <div class="map-canvas">
           <div class="map-bg-pattern">
-            <div class="map-region-label toshkent-label">📍 Toshkent</div>
-            <div class="map-region-label samarqand-label">📍 Samarqand</div>
-            <div class="map-region-label buxoro-label">📍 Buxoro</div>
-            <div class="map-region-label fargona-label">📍 Farg'ona</div>
+            <div class="map-region-label toshkent-label"><MapPin :size="12" /> Toshkent</div>
+            <div class="map-region-label samarqand-label"><MapPin :size="12" /> Samarqand</div>
+            <div class="map-region-label buxoro-label"><MapPin :size="12" /> Buxoro</div>
+            <div class="map-region-label fargona-label"><MapPin :size="12" /> Farg'ona</div>
           </div>
 
           <!-- Pins for Services -->
@@ -165,7 +165,7 @@
               <span v-else>{{ (service.craftsman?.full_name || 'U')[0] }}</span>
             </div>
             <div class="pin-badge">
-              ⭐ {{ service.rating.toFixed(1) }}
+              <Star :size="11" fill="currentColor" /> {{ service.rating.toFixed(1) }}
             </div>
           </div>
 
@@ -181,7 +181,7 @@
               </div>
             </div>
             <div class="popup-footer">
-              <span class="popup-loc">📍 {{ selectedMapService.city }} {{ selectedMapService.district ? '(' + selectedMapService.district + ')' : '' }}</span>
+              <span class="popup-loc"><MapPin :size="13" /> {{ selectedMapService.city }} {{ selectedMapService.district ? '(' + selectedMapService.district + ')' : '' }}</span>
               <router-link :to="`/services/${selectedMapService.id}`" class="btn btn-primary btn-sm">
                 Xizmatni ko'rish →
               </router-link>
@@ -261,7 +261,7 @@
             <!-- Tags / Badges -->
             <div class="kwork-tags">
               <span class="badge badge-primary">{{ service.category }}</span>
-              <span class="badge badge-subtle">📍 {{ service.city }}</span>
+              <span class="badge badge-subtle"><MapPin :size="12" /> {{ service.city }}</span>
             </div>
 
             <div class="kwork-divider"></div>
@@ -293,7 +293,7 @@ import { formatPrice, getInitials, CATEGORY_OPTIONS, CITY_OPTIONS, DISTRICT_OPTI
 import { SAMPLE_SERVICES } from '../data/sampleServices'
 import {
   Search, Filter, RotateCcw, Plus, Wrench,
-  Star, Clock, X, MapPin, Heart, Map, LayoutGrid
+  Star, Clock, X, MapPin, Heart, Map, LayoutGrid, Sparkles
 } from 'lucide-vue-next'
 
 const bookmarkStore = useBookmarkStore()

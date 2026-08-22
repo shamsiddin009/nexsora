@@ -122,7 +122,7 @@
     <div v-if="showBalanceModal" class="modal-overlay" @click.self="showBalanceModal = false">
       <div class="modal-card card">
         <div class="modal-header">
-          <h3>💰 Balansni To'ldirish</h3>
+          <h3>Balansni To'ldirish</h3>
           <button class="close-btn" @click="showBalanceModal = false"><X :size="18" /></button>
         </div>
         <div class="modal-body">
@@ -130,13 +130,21 @@
           <p class="modal-info-text">Hozirgi balans: <strong>{{ formatPrice(selectedUser?.balance || 0) }}</strong></p>
           
           <div class="form-group mt-3">
-            <label class="input-label">Qo'shiladigan summa (UZS):</label>
-            <input v-model.number="topUpAmount" type="number" step="10000" class="input input-clean" placeholder="Masalan: 500000" />
+            <CurrencyInput
+              v-model="topUpAmount"
+              label="Qo'shiladigan summa"
+              placeholder="500 000"
+              :min="10000"
+              :step="50000"
+              :quick-presets="[100000, 300000, 500000, 1000000]"
+            />
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" @click="showBalanceModal = false">Bekor qilish</button>
-          <button class="btn btn-primary" @click="confirmTopUp">Tasdiqlash & Qo'shish</button>
+          <button class="btn btn-secondary btn-sm" @click="showBalanceModal = false">Bekor qilish</button>
+          <button class="btn btn-primary btn-sm" :disabled="!topUpAmount || topUpAmount <= 0" @click="confirmTopUp">
+            Balansni to'ldirish
+          </button>
         </div>
       </div>
     </div>
@@ -157,10 +165,11 @@ import AdminDisputesTab from '../components/admin/AdminDisputesTab.vue'
 import AdminVerificationsTab from '../components/admin/AdminVerificationsTab.vue'
 import AdminUsersTab from '../components/admin/AdminUsersTab.vue'
 import AdminPayoutsTab from '../components/admin/AdminPayoutsTab.vue'
+import CurrencyInput from '../components/common/CurrencyInput.vue'
 
 import {
   ShieldCheck, LayoutDashboard, Scale, BadgeCheck, Users,
-  CreditCard, RotateCcw, X
+  CreditCard, RotateCcw, X, Coins
 } from 'lucide-vue-next'
 
 const authStore = useAuthStore()
@@ -304,32 +313,32 @@ function confirmTopUp() {
   if (!selectedUser.value || topUpAmount.value <= 0) return
   selectedUser.value.balance = (selectedUser.value.balance || 0) + topUpAmount.value
   showBalanceModal.value = false
-  toast.success("Balans to'ldirildi", `${selectedUser.value.full_name} hisobiga +${formatPrice(topUpAmount.value)} qo'shildi! 💳`)
+  toast.success("Balans to'ldirildi", `${selectedUser.value.full_name} hisobiga +${formatPrice(topUpAmount.value)} qo'shildi!`)
 }
 
 function toggleBlockUser(user) {
   user.is_blocked = !user.is_blocked
   if (user.is_blocked) {
-    toast.error("Foydalanuvchi bloklandi", `${user.full_name} tizimdan vaqtincha chetlatildi! 🚫`)
+    toast.error("Foydalanuvchi bloklandi", `${user.full_name} tizimdan vaqtincha chetlatildi!`)
   } else {
-    toast.success("Blokdan chiqarildi", `${user.full_name} hisobi qayta faollashtirildi! 🟢`)
+    toast.success("Blokdan chiqarildi", `${user.full_name} hisobi qayta faollashtirildi!`)
   }
 }
 
 function resolveDispute(disp, verdict) {
   disp.resolved = true
   if (verdict === 'release_craftsman') {
-    toast.success("Hukm chiqarildi", `Mablag' (${formatPrice(disp.amount)}) to'liq ustaga o'tkazildi! 🔨`)
+    toast.success("Hukm chiqarildi", `Mablag' (${formatPrice(disp.amount)}) to'liq ustaga o'tkazildi!`)
   } else if (verdict === 'refund_client') {
-    toast.info("Hukm chiqarildi", `Mablag' (${formatPrice(disp.amount)}) mijoz hamyoniga qaytarildi! 💰`)
+    toast.info("Hukm chiqarildi", `Mablag' (${formatPrice(disp.amount)}) mijoz hamyoniga qaytarildi!`)
   } else {
-    toast.warning("Hukm chiqarildi", `Mablag' 50/50 teng taqsimlandi! ⚖️`)
+    toast.warning("Hukm chiqarildi", `Mablag' 50/50 teng taqsimlandi!`)
   }
 }
 
 function approveCraftsman(craftsman) {
   craftsman.is_verified = true
-  toast.success("Usta tasdiqlandi", `${craftsman.name}ga Tasdiqlangan Ko'k Nishon berildi! 🏅`)
+  toast.success("Usta tasdiqlandi", `${craftsman.name}ga Tasdiqlangan Nishon berildi!`)
 }
 
 function revokeCraftsman(craftsman) {

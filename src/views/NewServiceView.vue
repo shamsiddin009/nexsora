@@ -55,14 +55,14 @@
           <!-- 3. Price & Duration -->
           <div class="form-row-2">
             <div class="input-group">
-              <label class="input-label">Boshlang'ich narx (so'm) *</label>
-              <input
+              <CurrencyInput
                 v-model="form.price"
-                type="number"
-                placeholder="300,000"
-                class="input"
-                required
-                min="10000"
+                label="Boshlang'ich narx"
+                placeholder="300 000"
+                :required="true"
+                :min="10000"
+                :quick-presets="[100000, 300000, 500000, 1000000]"
+                :step="50000"
               />
             </div>
 
@@ -182,6 +182,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import CustomSelect from '../components/CustomSelect.vue'
+import CurrencyInput from '../components/common/CurrencyInput.vue'
 import { useAuthStore } from '../stores/auth'
 import { CATEGORY_OPTIONS, CITY_OPTIONS, JOB_CATEGORIES, UZ_CITIES } from '../utils'
 import {

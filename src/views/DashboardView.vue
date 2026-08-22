@@ -12,7 +12,7 @@
               <span>{{ timeGreeting }}</span>
             </div>
             <h1 class="hero-title">
-              Xush kelibsiz, <span class="gradient-text">{{ userName }}</span>! 👋
+              Xush kelibsiz, <span class="gradient-text">{{ userName }}</span>!
             </h1>
             <p class="hero-subtitle">
               {{ authStore.isClient 
@@ -262,7 +262,7 @@
             <Sparkles :size="14" />
             <span>Bonus dasturi</span>
           </div>
-          <h2 class="referral-title">Do'stlaringizni taklif qiling — <strong>50,000 so'm</strong> bonus oling! 🎁</h2>
+          <h2 class="referral-title">Do'stlaringizni taklif qiling — <strong>50,000 so'm</strong> bonus oling!</h2>
           <p class="referral-description">
             Do'stingiz sizning havolangiz orqali ro'yxatdan o'tib, birinchi buyurtmasini berganda, hisobingizga avtomatik bonus o'tkaziladi.
           </p>
@@ -357,8 +357,8 @@ function getChatSnippet(chat) {
     return chat.jobs?.title ? `Loyiha: ${chat.jobs.title}` : "Suhbatni boshlang..."
   }
   const content = chat.last_message.content
-  if (content.startsWith('[VOICE')) return '🎙️ Ovozli xabar'
-  if (content.includes('[IMAGE:')) return '📸 Rasm yuborildi'
+  if (content.startsWith('[VOICE')) return 'Ovozli xabar'
+  if (content.includes('[IMAGE:')) return 'Rasm yuborildi'
   return content.replace(/^\[reply:[^\]]+\]\n/, '').slice(0, 45)
 }
 

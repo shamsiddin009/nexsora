@@ -151,7 +151,7 @@
               <strong class="stat-savings">+{{ formatNumber(monthlyCommissionSavings) }} so'm / oyiga</strong>
             </div>
             <p class="roi-note">
-              💡 Pro Usta tarifi narxi (189 000 so'm) atigi bir nechta buyurtmada o'zini <strong>{{ roiMultiple }} barobar</strong> oqlaydi!
+              <Lightbulb :size="15" class="inline-icon" /> Pro Usta tarifi narxi (189 000 so'm) atigi bir nechta buyurtmada o'zini <strong>{{ roiMultiple }} barobar</strong> oqlaydi!
             </p>
           </div>
         </div>
@@ -280,7 +280,7 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { 
   Sparkles, Wrench, Building2, CheckCircle2, Zap, 
-  ArrowRight, Calculator, ShieldCheck, Lock, X
+  ArrowRight, Calculator, ShieldCheck, Lock, X, Lightbulb
 } from 'lucide-vue-next'
 import { useSubscriptionStore } from '../stores/subscriptionStore'
 import { useWalletStore } from '../stores/walletStore'

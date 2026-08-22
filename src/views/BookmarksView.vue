@@ -53,7 +53,7 @@
         <div v-if="bookmarkStore.bookmarkedServices.length === 0" class="bm-empty">
           <BookmarkX :size="52" class="bm-empty-icon" />
           <h3>Saqlangan ustalar yo'q</h3>
-          <p>Ustalar katalogiga kiring va ♥ tugmasini bosing</p>
+          <p>Ustalar katalogiga kiring va saqlash tugmasini bosing</p>
           <router-link to="/services" class="bm-explore-btn">
             <Wrench :size="16" />
             Ustalarni ko'rish
@@ -119,7 +119,7 @@
         <div v-if="bookmarkStore.bookmarkedJobs.length === 0" class="bm-empty">
           <BookmarkX :size="52" class="bm-empty-icon" />
           <h3>Saqlangan e'lonlar yo'q</h3>
-          <p>Ish e'lonlariga kiring va ♥ tugmasini bosing</p>
+          <p>Ish e'lonlariga kiring va saqlash tugmasini bosing</p>
           <router-link to="/jobs" class="bm-explore-btn">
             <Briefcase :size="16" />
             E'lonlarni ko'rish

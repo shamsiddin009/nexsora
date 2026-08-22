@@ -96,7 +96,7 @@
               <Gift :size="18" class="input-icon" />
               <input v-model="form.referralCode" placeholder="Masalan: NEX-A1B2C3D4" class="input" />
             </div>
-            <p class="input-hint" v-if="form.referralCode">🎁 Do'stingiz sizni taklif qilgani uchun 50,000 UZS bonus taqdim etiladi!</p>
+            <p class="input-hint" v-if="form.referralCode"><Gift :size="13" class="inline-icon" /> Do'stingiz sizni taklif qilgani uchun 50,000 UZS bonus taqdim etiladi!</p>
           </div>
         </template>
 
@@ -146,7 +146,8 @@
             <div class="tg-banner-text">
               <p>Tasdiqlash kodini <strong>@NexsoraOPT_bot</strong> orqali oling:</p>
               <a href="https://t.me/NexsoraOPT_bot?start=reg" target="_blank" rel="noopener" class="tg-bot-link">
-                <span>📲 Telegram Botni Ochish</span>
+                <Send :size="14" />
+                <span>Telegram Botni Ochish</span>
               </a>
             </div>
           </div>
@@ -172,7 +173,7 @@
                 autofocus
               />
             </div>
-            <p class="input-hint">Botga kiring va «📱 Telefon raqamni yuborish» tugmasini bosing.</p>
+            <p class="input-hint">Botga kiring va «Telefon raqamni yuborish» tugmasini bosing.</p>
           </div>
         </template>
 
@@ -272,7 +273,7 @@
               <Gift :size="18" class="input-icon" />
               <input v-model="form.referralCode" placeholder="Masalan: NEX-A1B2C3D4" class="input" />
             </div>
-            <p class="input-hint" v-if="form.referralCode">🎁 Do'stingiz sizni taklif qilgani uchun 50,000 UZS bonus taqdim etiladi!</p>
+            <p class="input-hint" v-if="form.referralCode"><Gift :size="13" class="inline-icon" /> Do'stingiz sizni taklif qilgani uchun 50,000 UZS bonus taqdim etiladi!</p>
           </div>
         </template>
 

@@ -154,13 +154,14 @@
                     :disabled="testingTelegram"
                     @click="handleTestTelegram"
                   >
-                    {{ testingTelegram ? 'Yuborilmoqda...' : '📲 Test xabar' }}
+                    <Smartphone :size="14" />
+                    <span>{{ testingTelegram ? 'Yuborilmoqda...' : 'Test xabar' }}</span>
                   </button>
                 </div>
                 
                 <!-- 1-Click ID Helper Links -->
                 <div class="tg-helper-hint">
-                  <span class="hint-title">💡 ID raqamingizni bilmaysizmi?</span>
+                  <span class="hint-title"><Lightbulb :size="14" /> ID raqamingizni bilmaysizmi?</span>
                   <div class="tg-helper-links">
                     <a
                       href="https://t.me/userinfobot"
@@ -248,7 +249,10 @@
             </template>
 
             <div v-if="error" class="error-box">{{ error }}</div>
-            <div v-if="success" class="success-box">✓ Profil sozlamalari muvaffaqiyatli saqlandi!</div>
+            <div v-if="success" class="success-box">
+              <CheckCircle2 :size="16" class="inline-icon" />
+              <span>Profil sozlamalari muvaffaqiyatli saqlandi!</span>
+            </div>
 
             <button type="submit" class="btn btn-primary" :disabled="saving" style="align-self: flex-start; min-width: 160px">
               <span v-if="saving" class="animate-spin loader"></span>
@@ -296,7 +300,10 @@
             </div>
 
             <div v-if="passwordError" class="error-box">{{ passwordError }}</div>
-            <div v-if="passwordSuccess" class="success-box">✓ Parolingiz muvaffaqiyatli yangilandi!</div>
+            <div v-if="passwordSuccess" class="success-box">
+              <CheckCircle2 :size="16" class="inline-icon" />
+              <span>Parolingiz muvaffaqiyatli yangilandi!</span>
+            </div>
 
             <button type="submit" class="btn btn-primary" :disabled="passwordSaving" style="align-self: flex-start; min-width: 180px">
               <span v-if="passwordSaving" class="animate-spin loader"></span>
@@ -360,8 +367,9 @@ import { useTheme } from '../composables/useTheme'
 import { CATEGORY_OPTIONS, CITY_OPTIONS, JOB_CATEGORIES, UZ_CITIES, getInitials } from '../utils'
 import {
   User, Phone, MapPin, Save, Lock,
-  Sun, Moon, ShieldCheck, CheckCircle,
-  Upload, Trash2, Camera, Send, ExternalLink, Bot
+  Sun, Moon, ShieldCheck, CheckCircle, CheckCircle2,
+  Upload, Trash2, Camera, Send, ExternalLink, Bot,
+  Lightbulb, Smartphone, AlertTriangle, XCircle
 } from 'lucide-vue-next'
 import { sendTelegramNotification } from '../services/telegramNotifier'
 

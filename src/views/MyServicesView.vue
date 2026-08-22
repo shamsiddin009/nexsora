@@ -41,9 +41,9 @@
             <h3 class="service-title">{{ item.title }}</h3>
             
             <div class="service-meta-row">
-              <span class="meta-item">📍 {{ item.city }}</span>
-              <span class="meta-item">⏱️ {{ item.duration_days }} kunda</span>
-              <span class="meta-item">⭐ {{ item.rating.toFixed(1) }} ({{ item.reviews_count }})</span>
+              <span class="meta-item"><MapPin :size="12" /> {{ item.city }}</span>
+              <span class="meta-item"><Clock :size="12" /> {{ item.duration_days }} kunda</span>
+              <span class="meta-item"><Star :size="12" fill="currentColor" /> {{ item.rating.toFixed(1) }} ({{ item.reviews_count }})</span>
             </div>
 
             <div class="card-footer-row">
@@ -89,7 +89,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { formatPrice } from '../utils'
 import { SAMPLE_SERVICES } from '../data/sampleServices'
-import { Wrench, Trash2, Zap, Plus } from 'lucide-vue-next'
+import { Wrench, Trash2, Zap, Plus, MapPin, Clock, Star } from 'lucide-vue-next'
 import BoostModal from '../components/common/BoostModal.vue'
 
 const authStore = useAuthStore()

@@ -133,9 +133,9 @@ const strengthWidth = computed(() => `${(strengthScore.value / 5) * 100}%`)
 
 const strengthText = computed(() => {
   if (!password.value) return ''
-  if (strengthScore.value <= 1) return '🔴 Juda zaif'
-  if (strengthScore.value <= 3) return '🟡 O\'rtacha'
-  return '🟢 Kuchli parol'
+  if (strengthScore.value <= 1) return 'Juda zaif'
+  if (strengthScore.value <= 3) return "O'rtacha"
+  return 'Kuchli parol'
 })
 
 async function resetPassword() {

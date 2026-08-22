@@ -25,7 +25,7 @@
             <!-- For Clients ONLY: Post Big Project / Building Job -->
             <router-link v-if="!authStore.isCraftsman" to="/jobs/new?type=building" class="btn btn-secondary btn-lg">
               <Building2 :size="18" />
-              <span>🏢 Katta Loyiha E'lon Qilish</span>
+              <span>Katta Loyiha E'lon Qilish</span>
             </router-link>
 
             <!-- For Craftsmen ONLY: View Big Projects in Birja -->
@@ -85,7 +85,7 @@
             :class="{ active: selectedSpecialty === '' }"
             @click="selectedSpecialty = ''"
           >
-            <span>🏗️ Barcha Yo'nalishlar</span>
+            <span>Barcha Yo'nalishlar</span>
           </button>
           <button
             v-for="spec in specialtyOptions"
@@ -94,7 +94,7 @@
             :class="{ active: selectedSpecialty === spec.name }"
             @click="selectedSpecialty = spec.name"
           >
-            <span>{{ spec.icon }} {{ spec.name }}</span>
+            <span>{{ spec.name }}</span>
           </button>
         </div>
 

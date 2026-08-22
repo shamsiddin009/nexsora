@@ -42,7 +42,9 @@
             :to="n.link || '#'"
             class="notif-link"
           >
-            <div class="notif-icon">{{ typeIcons[n.type] || '🔔' }}</div>
+            <div class="notif-icon" :class="`notif-${n.type || 'default'}`">
+              <component :is="getTypeIcon(n.type)" :size="20" />
+            </div>
             <div class="notif-content">
               <div class="notif-title">{{ n.title }}</div>
               <div v-if="n.body" class="notif-body">{{ n.body }}</div>
@@ -70,18 +72,30 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { supabase } from '../services/supabase'
 import { formatRelativeTime } from '../utils'
-import { Bell, Trash2 } from 'lucide-vue-next'
+import {
+  Bell, Trash2, Mail, MessageSquare, CheckCircle2, Trophy, Sparkles, AlertCircle
+} from 'lucide-vue-next'
 
 const authStore = useAuthStore()
 const notifications = ref([])
 const loading = ref(true)
 let channel = null
 
-const typeIcons = {
-  new_offer: '📩',
-  new_message: '💬',
-  offer_accepted: '✅',
-  job_completed: '🏆',
+function getTypeIcon(type) {
+  switch (type) {
+    case 'new_offer':
+      return Mail
+    case 'new_message':
+      return MessageSquare
+    case 'offer_accepted':
+      return CheckCircle2
+    case 'job_completed':
+      return Trophy
+    case 'system':
+      return Sparkles
+    default:
+      return Bell
+  }
 }
 
 async function loadNotifications() {

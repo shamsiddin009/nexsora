@@ -39,7 +39,7 @@
               <Wrench :size="22" />
             </div>
             <div class="type-content">
-              <h4>🛠️ Oddiy Xizmat / Buyurtma</h4>
+              <h4>Oddiy Xizmat / Buyurtma</h4>
               <p>Santexnika, elektr, mayda ta'mirlash va xonadon xizmatlari</p>
             </div>
             <div v-if="projectType === 'regular'" class="type-check-badge">
@@ -56,7 +56,7 @@
               <Building2 :size="22" />
             </div>
             <div class="type-content">
-              <h4>🏢 Katta Loyiha / Bino Qurilishi</h4>
+              <h4>Katta Loyiha / Bino Qurilishi</h4>
               <p>Hovli, kottej, ofis qurilishi yoki kompleks brigada talab qiladigan obyektlar</p>
             </div>
             <div v-if="projectType === 'building'" class="type-check-badge">
@@ -109,7 +109,7 @@
             <div class="box-header">
               <div class="box-icon"><HardHat :size="18" /></div>
               <div>
-                <h4>🏢 Katta Bino / Kottej Qurilishi Parametrlari</h4>
+                <h4>Katta Bino / Kottej Qurilishi Parametrlari</h4>
                 <p>Usta brigadalari uchun obyekt o'lchamlari va bosqichlarini belgilang</p>
               </div>
             </div>
@@ -119,7 +119,7 @@
                 <label class="input-label sub-label">Bino / Obyekt Maydoni (m²):</label>
                 <div class="input-icon-wrapper">
                   <Ruler :size="16" class="input-icon" />
-                  <input v-model="buildingDetails.area" type="number" placeholder="Masalan: 350 m²" class="input" />
+                  <input v-model="buildingDetails.area" type="number" placeholder="Masalan: 350" class="input" />
                 </div>
               </div>
               <div class="input-group">
@@ -189,17 +189,27 @@
               <label class="input-label">Byudjet oralig'i (so'm)</label>
               <button type="button" class="btn-ai-budget-trigger" @click="showAiPriceModal = true">
                 <Sparkles :size="14" />
-                <span>🤖 AI Narx Kalkulyatori</span>
+                <span>AI Narx Kalkulyatori</span>
               </button>
             </div>
             <div class="row">
               <div class="input-group">
-                <label class="input-label sub-label">Min byudjet (so'm)</label>
-                <input v-model="form.budget_min" type="number" placeholder="50,000" class="input" />
+                <CurrencyInput
+                  v-model="form.budget_min"
+                  label="Minimal byudjet"
+                  placeholder="50 000"
+                  :quick-presets="[50000, 100000, 300000, 500000]"
+                  :step="50000"
+                />
               </div>
               <div class="input-group">
-                <label class="input-label sub-label">Max byudjet (so'm)</label>
-                <input v-model="form.budget_max" type="number" placeholder="500,000" class="input" />
+                <CurrencyInput
+                  v-model="form.budget_max"
+                  label="Maksimal byudjet"
+                  placeholder="500 000"
+                  :quick-presets="[500000, 1000000, 2000000, 5000000]"
+                  :step="50000"
+                />
               </div>
             </div>
           </div>
@@ -225,7 +235,7 @@
 
           <button type="submit" class="btn btn-primary btn-lg" :disabled="loading" style="align-self: flex-start; min-width: 180px">
             <span v-if="loading" class="animate-spin loader"></span>
-            <span v-else>{{ projectType === 'building' ? '🏢 Bino Qurilishini E\'lon Qilish' : 'E\'lon Joylash' }}</span>
+            <span v-else>{{ projectType === 'building' ? 'Bino Qurilishini E\'lon Qilish' : 'E\'lon Joylash' }}</span>
           </button>
         </form>
       </div>
@@ -249,6 +259,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { supabase } from '../services/supabase'
 import CustomSelect from '../components/CustomSelect.vue'
+import CurrencyInput from '../components/common/CurrencyInput.vue'
 import AiPriceEstimatorModal from '../components/AiPriceEstimatorModal.vue'
 import { CATEGORY_OPTIONS, CITY_OPTIONS, JOB_CATEGORIES, UZ_CITIES, toDeterministicUuid, generateUuid } from '../utils'
 import {

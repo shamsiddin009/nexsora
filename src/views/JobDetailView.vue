@@ -74,7 +74,8 @@
                 {{ job.profiles?.full_name || 'Foydalanuvchi' }}
               </div>
               <div class="client-sub">
-                📍 {{ job.profiles?.city || job.city || 'Hudud ko\'rsatilmagan' }}
+                <MapPin :size="13" class="inline-icon" />
+                <span>{{ job.profiles?.city || job.city || 'Hudud ko\'rsatilmagan' }}</span>
               </div>
             </div>
           </div>
@@ -359,7 +360,7 @@ async function acceptOffer(offer) {
       await supabase.from('notifications').insert({
         user_id: validCraftsmanId,
         type: 'offer_accepted',
-        title: 'Taklifingiz qabul qilindi! 🎉',
+        title: 'Taklifingiz qabul qilindi!',
         body: `"${job.value.title}" bo'yicha yuborgan taklifingiz mijoz tomonidan qabul qilindi. Chat orqali bog'laning.`,
         link: `/chat/${chatId}`,
       })

@@ -503,13 +503,13 @@ const averageRating = computed(() => {
 
 function getRatingLabel(rating) {
   const labels = {
-    1: 'Juda yomon 😞',
-    2: 'Qoniqarsiz 😐',
-    3: 'O\'rtacha 🙂',
-    4: 'Yaxshi 😊',
-    5: 'A\'lo darajada! 🌟',
+    1: 'Juda yomon',
+    2: 'Qoniqarsiz',
+    3: "O'rtacha",
+    4: 'Yaxshi',
+    5: "A'lo darajada!",
   }
-  return labels[rating] || 'A\'lo'
+  return labels[rating] || "A'lo"
 }
 
 function loadLocalReviews(userId) {
@@ -583,22 +583,22 @@ async function fetchProfileData() {
 
 // Quick Impression Tags
 const craftsmanTags = [
-  '⚡ Tez va sifatli',
-  '🤝 Xushmuomala',
-  '🛠 O\'z ishining ustasi',
-  '💎 A\'lo natija',
-  '💰 Hamyonbop narx',
-  '⏱ O\'z vaqtida keldi'
+  'Tez va sifatli',
+  'Xushmuomala',
+  "O'z ishining ustasi",
+  "A'lo natija",
+  'Hamyonbop narx',
+  "O'z vaqtida keldi"
 ]
 
 const clientTags = [
-  '💰 O\'z vaqtida to\'ladi',
-  '🤝 Xushmuomala va samimiy',
-  '📍 Aniq manzil berdi',
-  '📉 Narxni juda tushiradi',
-  '⏱ To\'lovni kechiktirdi',
-  '⭐ Ajoyib mijoz',
-  '❌ Talablari noaniq'
+  "O'z vaqtida to'ladi",
+  'Xushmuomala va samimiy',
+  'Aniq manzil berdi',
+  'Tezkor kelishuv',
+  "To'lovni o'z vaqtida qildi",
+  'Ajoyib mijoz',
+  'Talablari aniq'
 ]
 
 function addTagToComment(tag) {

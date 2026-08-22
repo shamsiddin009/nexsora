@@ -134,9 +134,9 @@
                 <span class="sort-label">Saralash:</span>
                 <select v-model="sortBy" class="select-clean">
                   <option value="newest">Eng yangi e'lonlar</option>
-                  <option value="budget_desc">Yuqori byudjet 💰</option>
+                  <option value="budget_desc">Yuqori byudjet</option>
                   <option value="budget_asc">Qulay byudjet</option>
-                  <option value="urgent">Shoshilinch 🔥</option>
+                  <option value="urgent">Shoshilinch</option>
                 </select>
               </div>
             </div>
@@ -155,28 +155,32 @@
                 :class="{ active: activeQuickTag === 'urgent' }"
                 @click="setQuickFilter('urgent')"
               >
-                🔥 Shoshilinch
+                <Flame :size="13" />
+                <span>Shoshilinch</span>
               </button>
               <button
                 class="quick-pill"
                 :class="{ active: activeQuickTag === 'guaranteed' }"
                 @click="setQuickFilter('guaranteed')"
               >
-                🛡️ Escrow Kafolatli
+                <ShieldCheck :size="13" />
+                <span>Escrow Kafolatli</span>
               </button>
               <button
                 class="quick-pill"
                 :class="{ active: activeQuickTag === 'high_budget' }"
                 @click="setQuickFilter('high_budget')"
               >
-                💎 1,000,000+ so'm
+                <Gem :size="13" />
+                <span>1 000 000+ so'm</span>
               </button>
               <button
                 class="quick-pill"
                 :class="{ active: activeQuickTag === 'tashkent' }"
                 @click="setQuickFilter('tashkent')"
               >
-                📍 Toshkent
+                <MapPin :size="13" />
+                <span>Toshkent</span>
               </button>
               <button
                 v-if="authStore.isCraftsman && myOfferedCount > 0"
@@ -184,7 +188,8 @@
                 :class="{ active: activeQuickTag === 'my_offers' }"
                 @click="setQuickFilter('my_offers')"
               >
-                📩 Taklif yuborilganlar ({{ myOfferedCount }})
+                <Mail :size="13" />
+                <span>Taklif yuborilganlar ({{ myOfferedCount }})</span>
               </button>
             </div>
 
@@ -219,9 +224,9 @@
                     </router-link>
                     <div class="badges-row">
                       <span class="badge badge-primary">{{ job.category }}</span>
-                      <span class="badge badge-success">📍 {{ job.city || 'Toshkent' }}</span>
-                      <span v-if="job.hasMyOffer" class="badge badge-info">✅ Taklifingiz yuborilgan</span>
-                      <span v-if="job.budget_max >= 1000000" class="badge badge-warning">💰 VIP Byudjet</span>
+                      <span class="badge badge-success"><MapPin :size="11" /> {{ job.city || 'Toshkent' }}</span>
+                      <span v-if="job.hasMyOffer" class="badge badge-info"><CheckCircle2 :size="11" /> Taklifingiz yuborilgan</span>
+                      <span v-if="job.budget_max >= 1000000" class="badge badge-warning"><Coins :size="11" /> VIP Byudjet</span>
                     </div>
                   </div>
                   <div class="card-top-right">
@@ -312,7 +317,8 @@ import { supabase } from '../services/supabase'
 import { formatPrice, formatRelativeTime, getInitials, CATEGORY_OPTIONS, CITY_OPTIONS, JOB_CATEGORIES, UZ_CITIES, debounce } from '../utils'
 import {
   Plus, Search, Calendar, Briefcase,
-  SlidersHorizontal, Zap, ShieldCheck, Sparkles, Filter, CheckCircle2, RotateCcw, Heart
+  SlidersHorizontal, Zap, ShieldCheck, Sparkles, Filter, CheckCircle2, RotateCcw, Heart,
+  Flame, Gem, MapPin, Mail, Coins
 } from 'lucide-vue-next'
 
 

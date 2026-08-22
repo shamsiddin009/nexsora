@@ -59,7 +59,8 @@
             <div class="tg-banner-text">
               <p>Tasdiqlash kodini <strong>@NexsoraOPT_bot</strong> orqali oling:</p>
               <a href="https://t.me/NexsoraOPT_bot?start=login" target="_blank" rel="noopener" class="tg-bot-link">
-                <span>📲 Telegram Botni Ochish</span>
+                <Send :size="14" />
+                <span>Telegram Botni Ochish</span>
               </a>
             </div>
           </div>
@@ -166,7 +167,8 @@
       </p>
 
       <router-link to="/#guide" class="guide-quick-link">
-        💡 Ro'yxatdan o'tish bo'yicha qo'llanma
+        <Lightbulb :size="14" class="inline-icon" />
+        <span>Ro'yxatdan o'tish bo'yicha qo'llanma</span>
       </router-link>
     </div>
   </div>
@@ -175,7 +177,7 @@
 <script setup>
 import { ref, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { Wrench, Mail, Lock, Eye, EyeOff, Smartphone, Phone, KeyRound, Send } from 'lucide-vue-next'
+import { Wrench, Mail, Lock, Eye, EyeOff, Smartphone, Phone, KeyRound, Send, Lightbulb } from 'lucide-vue-next'
 import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
