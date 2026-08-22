@@ -10,6 +10,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isAuthenticated = computed(() => !!user.value)
   const isClient = computed(() => profile.value?.role === 'client')
+  const isCraftsman = computed(() => profile.value?.role === 'craftsman')
   const isAdmin = computed(() => {
     if (!user.value && !profile.value) return false
     if (profile.value?.role === 'admin' || profile.value?.is_admin === true) return true
