@@ -1,9 +1,9 @@
 <template>
   <div class="brigades-page">
-    
-    <!-- HERO HEADER -->
-    <section class="brigades-hero">
-      <div class="container hero-container">
+    <main class="container brigades-main">
+      
+      <!-- HERO HEADER CARD -->
+      <div class="brigades-hero-card">
         <div class="hero-content">
           <div class="hero-badge">
             <HardHat :size="16" />
@@ -34,16 +34,11 @@
               <span>Birjadagi Katta Loyihalar</span>
             </router-link>
           </div>
-
-
         </div>
       </div>
-    </section>
 
-    <!-- SEARCH & FILTER TOOLBAR -->
-    <section class="toolbar-section">
-      <div class="container toolbar-container">
-        
+      <!-- SEARCH & FILTER TOOLBAR -->
+      <div class="toolbar-box">
         <div class="toolbar-card card">
           <!-- Search box -->
           <div class="search-input-box">
@@ -97,14 +92,10 @@
             <span>{{ spec.name }}</span>
           </button>
         </div>
-
       </div>
-    </section>
 
-    <!-- BRIGADES GRID -->
-    <section class="brigades-list-section">
-      <div class="container">
-        
+      <!-- BRIGADES GRID SECTION -->
+      <div class="brigades-list-section">
         <div class="section-heading">
           <div>
             <h2>Mavjud Qurilish Brigadalari</h2>
@@ -218,7 +209,7 @@
         </div>
 
       </div>
-    </section>
+    </main>
 
     <!-- CREATE BRIGADE MODAL -->
     <CreateBrigadeModal
@@ -313,19 +304,26 @@ onMounted(() => {
 .brigades-page {
   background: var(--color-bg);
   min-height: calc(100vh - 68px);
-  padding-bottom: 80px;
 }
 
-/* HERO */
-.brigades-hero {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(108, 99, 255, 0.08) 100%), var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
-  padding: 48px 0 40px;
-}
-
-.hero-container {
+.brigades-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px clamp(16px, 3.5vw, 32px) 80px;
   display: flex;
   flex-direction: column;
+  gap: 28px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* HERO CARD */
+.brigades-hero-card {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(108, 99, 255, 0.08) 100%), var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  padding: 36px 32px;
+  box-shadow: var(--shadow-sm);
 }
 
 .hero-content {
@@ -350,7 +348,7 @@ onMounted(() => {
 }
 
 .hero-title {
-  font-size: 2.3rem;
+  font-size: 2.1rem;
   font-weight: 900;
   letter-spacing: -0.02em;
   color: var(--color-text);
@@ -359,7 +357,7 @@ onMounted(() => {
 }
 
 .hero-subtitle {
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   color: var(--color-text-2);
   line-height: 1.55;
   margin: 0;
@@ -374,19 +372,16 @@ onMounted(() => {
 }
 
 /* TOOLBAR */
-.toolbar-section {
-  padding: 24px 0 10px;
-}
-
-.toolbar-container {
+.toolbar-box {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  width: 100%;
 }
 
 .toolbar-card {
   padding: 16px 20px;
-  border-radius: 18px;
+  border-radius: 20px;
   background: var(--color-card);
   border: 1px solid var(--color-border);
   display: flex;
@@ -457,7 +452,8 @@ onMounted(() => {
   align-items: center;
   gap: 8px;
   overflow-x: auto;
-  padding: 4px 2px;
+  padding: 4px 2px 8px;
+  width: 100%;
 }
 
 .spec-pill {
@@ -489,7 +485,7 @@ onMounted(() => {
 
 /* BRIGADES GRID */
 .brigades-list-section {
-  padding: 20px 0;
+  width: 100%;
 }
 
 .section-heading h2 {
@@ -507,8 +503,9 @@ onMounted(() => {
 
 .brigades-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 24px;
+  width: 100%;
 }
 
 .brigade-card {

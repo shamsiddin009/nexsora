@@ -346,6 +346,5 @@ function confirmClear() {
 .bm-job-desc { font-size: 0.85rem; color: var(--color-text-2); margin: 0 0 10px; line-height: 1.5; }
 .bm-job-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.78rem; color: var(--color-text-2); }
 .bm-job-meta span { display: flex; align-items: center; gap: 4px; }
-
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 </style>
+
