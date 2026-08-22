@@ -5,6 +5,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import http from 'http';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -304,6 +305,17 @@ async function startPolling() {
     }
   }
 }
+
+// Health-check HTTP server for cloud deployments (Render, Railway, etc.)
+const PORT = process.env.PORT || 3000;
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ status: 'ok', service: 'Nexsora Telegram Bot', timestamp: new Date().toISOString() }));
+});
+
+server.listen(PORT, () => {
+  console.log(`🌐 Health check server listening on port ${PORT}`);
+});
 
 // Start bot
 startPolling();
