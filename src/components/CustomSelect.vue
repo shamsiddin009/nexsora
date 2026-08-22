@@ -59,8 +59,8 @@
     <!-- Dropdown Menu -->
     <transition name="select-dropdown-anim">
       <div v-if="isOpen" class="dropdown-popover">
-        <!-- Search Input (if searchable) -->
-        <div v-if="searchable" class="dropdown-search-box">
+        <!-- Search Input (if searchable and enough options) -->
+        <div v-if="shouldShowSearch" class="dropdown-search-box">
           <Search :size="15" class="search-icon" />
           <input
             ref="searchInputRef"
@@ -201,6 +201,11 @@ const normalizedOptions = computed(() => {
       color: item.color ?? null
     }
   })
+})
+
+const shouldShowSearch = computed(() => {
+  if (!props.searchable) return false
+  return normalizedOptions.value.length > 5
 })
 
 const selectedOption = computed(() => {
@@ -434,7 +439,9 @@ onUnmounted(() => {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  right: 0;
+  min-width: 100%;
+  width: max-content;
+  max-width: 320px;
   background: var(--color-card);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
@@ -445,7 +452,7 @@ onUnmounted(() => {
   z-index: 1050;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   max-height: 320px;
   overflow: hidden;
 }
@@ -563,6 +570,7 @@ onUnmounted(() => {
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--color-text);
+  white-space: nowrap;
 }
 
 .option-desc {
@@ -578,6 +586,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  margin-left: auto;
 }
 
 /* Animations */
