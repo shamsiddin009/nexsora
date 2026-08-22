@@ -205,20 +205,46 @@
         <div
           v-for="service in filteredServices"
           :key="service.id"
-          class="kwork-card card"
+          class="pinterest-service-card card"
           @click="router.push(`/services/${service.id}`)"
         >
-          <!-- Cover Image & Duration Badge -->
-          <div class="kwork-cover-box">
-            <img :src="service.cover_image" :alt="service.title" class="kwork-cover-img" loading="lazy" decoding="async" />
-            <span class="duration-badge">
+          <!-- 1. Top Cover Banner -->
+          <div class="pin-cover-box">
+            <img :src="service.cover_image" :alt="service.title" class="pin-cover-img" loading="lazy" decoding="async" />
+            <div class="pin-cover-overlay"></div>
+          </div>
 
-              <Clock :size="12" /> {{ service.duration_days }} kun
-            </span>
-            <!-- Bookmark Button -->
+          <!-- 2. Overlapping Avatar & Category Pill Row -->
+          <div class="pin-header-overlap">
+            <div class="pin-avatar-wrap">
+              <img
+                v-if="service.craftsman?.avatar_url"
+                :src="service.craftsman.avatar_url"
+                :alt="service.craftsman.full_name"
+                class="pin-avatar-img"
+              />
+              <div v-else class="pin-avatar-placeholder">
+                {{ getInitials(service.craftsman?.full_name || 'Usta') }}
+              </div>
+            </div>
+
+            <!-- Category Pill -->
+            <div class="pin-category-pill">
+              <Sparkles :size="12" class="pin-cat-icon" />
+              <span>{{ service.category }}</span>
+            </div>
+          </div>
+
+          <!-- 3. Profile Info & Bookmark Heart -->
+          <div class="pin-info-row">
+            <div class="pin-text-col">
+              <h3 class="pin-name">{{ service.craftsman?.full_name || 'Tajribali Usta' }}</h3>
+              <p class="pin-service-sub" :title="service.title">{{ service.title }}</p>
+            </div>
+
             <button
               type="button"
-              class="bm-heart-btn"
+              class="pin-bookmark-btn"
               :class="{ active: bookmarkStore.isBookmarked('service', service.id) }"
               :title="bookmarkStore.isBookmarked('service', service.id) ? 'Saqlanganlardan o\'chirish' : 'Saqlab qo\'yish'"
               @click.stop="bookmarkStore.toggleBookmark('service', service)"
@@ -227,55 +253,43 @@
             </button>
           </div>
 
-          <!-- Card Body -->
-          <div class="kwork-body">
-            <!-- Craftsman Mini Header -->
-            <div class="craftsman-mini-row">
-              <div class="craftsman-avatar-wrap">
-                <img
-                  v-if="service.craftsman?.avatar_url"
-                  :src="service.craftsman.avatar_url"
-                  :alt="service.craftsman.full_name"
-                  class="craftsman-avatar"
-                />
-                <div v-else class="craftsman-avatar-placeholder">
-                  {{ getInitials(service.craftsman?.full_name || 'Usta') }}
-                </div>
+          <!-- 4. 3-Column Stats Matrix (Rating, Price, Duration) -->
+          <div class="pin-stats-matrix">
+            <div class="pin-stat-item">
+              <div class="stat-top">
+                <Star :size="13" fill="#F59E0B" color="#F59E0B" />
+                <span class="stat-val">{{ service.rating.toFixed(1) }}</span>
               </div>
-              <div class="craftsman-info">
-                <span class="craftsman-name">{{ service.craftsman?.full_name || 'Usta' }}</span>
-                <span class="craftsman-level">Daraja {{ service.craftsman?.level || 1 }}</span>
-              </div>
-              <div class="rating-badge">
-                <Star :size="12" class="star-icon" fill="currentColor" />
-                <span>{{ service.rating.toFixed(1) }}</span>
-                <span class="reviews-count">({{ service.reviews_count }})</span>
-              </div>
+              <span class="stat-lbl">Reyting</span>
             </div>
 
-            <!-- Service Title -->
-            <h3 class="kwork-title">
-              {{ service.title }}
-            </h3>
+            <div class="pin-stat-divider"></div>
 
-            <!-- Tags / Badges -->
-            <div class="kwork-tags">
-              <span class="badge badge-primary">{{ service.category }}</span>
-              <span class="badge badge-subtle"><MapPin :size="12" /> {{ service.city }}</span>
-            </div>
-
-            <div class="kwork-divider"></div>
-
-            <!-- Card Footer: Price & Action -->
-            <div class="kwork-footer">
-              <div class="price-box">
-                <span class="price-prefix">Boshlang'ich narx</span>
-                <span class="price-val">{{ formatPrice(service.price) }}</span>
+            <div class="pin-stat-item">
+              <div class="stat-top">
+                <Coins :size="13" class="stat-icon-blue" />
+                <span class="stat-val">{{ formatShortPrice(service.price) }}</span>
               </div>
-              <span class="order-link">
-                Batafsil →
-              </span>
+              <span class="stat-lbl">Narx</span>
             </div>
+
+            <div class="pin-stat-divider"></div>
+
+            <div class="pin-stat-item">
+              <div class="stat-top">
+                <Clock :size="13" class="stat-icon-purple" />
+                <span class="stat-val">{{ service.duration_days }} kun</span>
+              </div>
+              <span class="stat-lbl">Muddati</span>
+            </div>
+          </div>
+
+          <!-- 5. Bottom "Bog'lanish" Button -->
+          <div class="pin-action-wrap">
+            <button class="pin-contact-btn" type="button">
+              <span>Bog'lanish & Ko'rish</span>
+              <ArrowRight :size="15" />
+            </button>
           </div>
         </div>
       </div>
@@ -293,7 +307,7 @@ import { formatPrice, getInitials, CATEGORY_OPTIONS, CITY_OPTIONS, DISTRICT_OPTI
 import { SAMPLE_SERVICES } from '../data/sampleServices'
 import {
   Search, Filter, RotateCcw, Plus, Wrench,
-  Star, Clock, X, MapPin, Heart, Map, LayoutGrid, Sparkles
+  Star, Clock, X, MapPin, Heart, Map, LayoutGrid, Sparkles, Coins, ArrowRight
 } from 'lucide-vue-next'
 
 const bookmarkStore = useBookmarkStore()
@@ -306,6 +320,18 @@ const viewMode = ref('list') // 'list' | 'map'
 const selectedMapService = ref(null)
 
 const popularCategories = ['Santexnik', 'Elektrik', 'Duradgor', 'Quruvchi', 'Konditsioner']
+
+function formatShortPrice(price) {
+  if (!price) return "0"
+  if (price >= 1000000) {
+    const m = (price / 1000000).toFixed(1).replace('.0', '')
+    return `${m}M`
+  }
+  if (price >= 1000) {
+    return `${Math.round(price / 1000)}k`
+  }
+  return `${price}`
+}
 
 function getPinPosition(service, idx) {
   // Deterministic positions on map based on city/district
@@ -609,176 +635,272 @@ onMounted(() => {
   color: var(--color-text);
 }
 
-/* GRID OF CARDS */
+/* PINTEREST STYLE SERVICE CARDS */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 26px;
 }
 
-.kwork-card {
+@media (max-width: 480px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pinterest-service-card {
   padding: 0;
+  border-radius: 28px;
   overflow: hidden;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 10px 28px -10px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  border-radius: 20px;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-.kwork-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(108, 99, 255, 0.4);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12), 0 0 20px rgba(108, 99, 255, 0.1);
+.pinterest-service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.16), 0 0 24px rgba(59, 130, 246, 0.12);
+  border-color: color-mix(in srgb, var(--color-primary) 50%, var(--color-border));
 }
 
-.kwork-cover-box {
+/* 1. Cover Banner */
+.pin-cover-box {
   width: 100%;
-  height: 180px;
+  height: 125px;
   position: relative;
   overflow: hidden;
   background: var(--color-surface-2);
 }
 
-.kwork-cover-img {
+.pin-cover-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease;
 }
 
-.kwork-card:hover .kwork-cover-img {
+.pinterest-service-card:hover .pin-cover-img {
   transform: scale(1.06);
 }
 
-.duration-badge {
+.pin-cover-overlay {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(4px);
-  color: white;
-  font-size: 0.72rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, transparent 60%, rgba(0, 0, 0, 0.35) 100%);
+  pointer-events: none;
 }
 
-.kwork-body {
-  padding: 18px;
+/* 2. Overlapping Avatar & Category Pill */
+.pin-header-overlap {
   display: flex;
-  flex-direction: column;
-  flex: 1;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 20px;
+  margin-top: -30px;
+  position: relative;
+  z-index: 2;
+}
+
+.pin-avatar-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3.5px solid var(--color-card);
+  overflow: hidden;
+  background: var(--color-surface);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+}
+
+.pin-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pin-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary), #8B5CF6);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.pin-category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.pin-cat-icon {
+  color: #F59E0B;
+}
+
+/* 3. Profile Info & Bookmark Button */
+.pin-info-row {
+  padding: 14px 20px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 12px;
 }
 
-.craftsman-info-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.pin-text-col {
+  flex: 1;
+  min-width: 0;
 }
 
-.craftsman-text {
+.pin-name {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.25;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pin-service-sub {
+  font-size: 0.86rem;
+  color: var(--color-text-2);
+  font-weight: 500;
+  margin: 4px 0 0;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pin-bookmark-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.pin-bookmark-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.pin-bookmark-btn.active {
+  background: rgba(239, 68, 68, 0.15);
+  color: #EF4444;
+  border-color: rgba(239, 68, 68, 0.4);
+  fill: #EF4444;
+}
+
+.pin-bookmark-btn.active svg {
+  fill: currentColor;
+}
+
+/* 4. 3-Column Stats Matrix */
+.pin-stats-matrix {
+  margin: 16px 20px;
+  padding: 12px 6px;
+  background: color-mix(in srgb, var(--color-surface) 75%, var(--color-bg));
+  border-radius: 18px;
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.pin-stat-item {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-}
-
-.craftsman-name {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--color-text);
-}
-
-.craftsman-rating-row {
-  display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 0.75rem;
+  gap: 2px;
+  flex: 1;
 }
 
-.star-gold {
-  color: var(--color-warning);
-  fill: var(--color-warning);
+.stat-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.rating-num {
-  font-weight: 700;
+.stat-val {
+  font-size: 0.95rem;
+  font-weight: 800;
   color: var(--color-text);
 }
 
-.reviews-count {
+.stat-lbl {
+  font-size: 0.72rem;
+  font-weight: 600;
   color: var(--color-muted);
 }
 
-.kwork-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--color-text);
-  line-height: 1.45;
-  margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  height: 2.8em;
-}
-
-.kwork-tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.badge-subtle {
-  background: var(--color-surface-2);
-  color: var(--color-text-2);
-  border: 1px solid var(--color-border);
-}
-
-.kwork-divider {
-  height: 1px;
+.pin-stat-divider {
+  width: 1px;
+  height: 24px;
   background: var(--color-border);
+}
+
+.stat-icon-blue {
+  color: #3B82F6;
+}
+
+.stat-icon-purple {
+  color: #8B5CF6;
+}
+
+/* 5. Bottom Action Button */
+.pin-action-wrap {
+  padding: 0 20px 20px;
   margin-top: auto;
 }
 
-.kwork-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding-top: 4px;
-}
-
-.price-box {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.price-prefix {
-  font-size: 0.72rem;
-  color: var(--color-muted);
-  font-weight: 500;
-}
-
-.price-val {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--color-success);
-}
-
-.order-link {
-  font-size: 0.85rem;
+.pin-contact-btn {
+  width: 100%;
+  height: 46px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #3B82F6, #2563EB);
+  color: #ffffff;
   font-weight: 700;
-  color: var(--color-primary-light);
-  transition: transform 0.15s ease;
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 18px -4px rgba(59, 130, 246, 0.4);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.kwork-card:hover .order-link {
-  transform: translateX(3px);
+.pin-contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -4px rgba(59, 130, 246, 0.5);
+  filter: brightness(1.06);
 }
 
 .empty-state-box {
