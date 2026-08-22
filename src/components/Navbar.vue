@@ -47,11 +47,6 @@
               <span>Xizmatlarim</span>
             </router-link>
 
-            <router-link to="/services/new" class="nav-link new-job-link">
-              <Plus :size="15" />
-              <span>Xizmat qo'shish</span>
-            </router-link>
-
             <router-link to="/chat" class="nav-link chat-link">
               <MessageCircle :size="16" />
               <span>Chat</span>
