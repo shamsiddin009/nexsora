@@ -34,7 +34,12 @@
                   :class="{ 'active': !filters.category }"
                   @click="filters.category = ''; fetchJobs()"
                 >
-                  <span>Barcha kategoriyalar</span>
+                  <div class="cat-btn-main">
+                    <div class="cat-icon-box">
+                      <Sparkles :size="15" />
+                    </div>
+                    <span class="cat-name">Barcha kategoriyalar</span>
+                  </div>
                   <span class="count-badge">{{ jobs.length }}</span>
                 </button>
                 <button
@@ -44,8 +49,12 @@
                   :class="{ 'active': filters.category === cat.value }"
                   @click="filters.category = cat.value; fetchJobs()"
                 >
-                  <component :is="cat.icon" :size="16" class="cat-icon-svg" />
-                  <span>{{ cat.label }}</span>
+                  <div class="cat-btn-main">
+                    <div class="cat-icon-box">
+                      <component :is="cat.icon" :size="15" class="cat-icon-svg" />
+                    </div>
+                    <span class="cat-name">{{ cat.label }}</span>
+                  </div>
                 </button>
               </div>
             </div>
@@ -838,42 +847,86 @@ onUnmounted(() => {
 .category-list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .category-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   padding: 8px 10px;
-  border-radius: 8px;
-  font-size: 0.85rem;
+  border-radius: 10px;
+  font-size: 0.86rem;
+  font-weight: 500;
   color: var(--color-text-2);
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   text-align: left;
   cursor: pointer;
-  transition: all 150ms ease;
+  transition: all 0.2s ease;
+  user-select: none;
 }
 
-.category-btn:hover, .category-btn.active {
+.cat-btn-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.cat-icon-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
   background: var(--color-surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-text-2);
+  transition: all 0.2s ease;
+}
+
+.cat-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: inherit;
+}
+
+.category-btn:hover {
+  background: var(--color-surface-2);
+  color: var(--color-text);
+}
+
+.category-btn:hover .cat-icon-box {
+  background: rgba(108, 99, 255, 0.12);
+  color: var(--color-primary-light);
+}
+
+.category-btn.active {
+  background: rgba(108, 99, 255, 0.1);
+  border-color: rgba(108, 99, 255, 0.25);
   color: var(--color-primary-light);
   font-weight: 600;
 }
 
-.cat-icon-emoji {
-  font-size: 1.05rem;
-  margin-right: 6px;
-  line-height: 1;
+.category-btn.active .cat-icon-box {
+  background: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(108, 99, 255, 0.3);
 }
 
 .count-badge {
   font-size: 0.72rem;
-  background: rgba(108,99,255,0.15);
+  font-weight: 700;
+  background: rgba(108, 99, 255, 0.12);
   color: var(--color-primary-light);
   padding: 2px 8px;
   border-radius: 999px;
+  margin-left: 8px;
 }
 
 .filter-inputs {
