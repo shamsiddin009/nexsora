@@ -1,0 +1,30 @@
+{
+  "name": "nexsora",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "bot": "node telegram-bot/bot.js",
+    "bot:start": "pm2 start telegram-bot/bot.js --name nexsora-bot",
+    "bot:stop": "pm2 stop nexsora-bot",
+    "bot:restart": "pm2 restart nexsora-bot",
+    "bot:status": "pm2 status",
+    "bot:logs": "pm2 logs nexsora-bot"
+  },
+  "dependencies": {
+    "@lucide/vue": "^1.31.0",
+    "@supabase/supabase-js": "^2.112.3",
+    "lucide-vue-next": "^1.0.0",
+    "pinia": "^4.0.2",
+    "vue": "^3.5.40",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.8",
+    "pm2": "^7.0.3",
+    "vite": "^8.2.0"
+  }
+}

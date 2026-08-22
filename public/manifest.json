@@ -1,0 +1,57 @@
+{
+  "name": "Nexsora — Ustalar va Xizmatlar Bozori",
+  "short_name": "Nexsora",
+  "description": "O'zbekistondagi eng ishonchli usta va xizmatlar platformasi. Xavfsiz to'lov va kafolat bilan.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0A0A0F",
+  "theme_color": "#6C63FF",
+  "lang": "uz",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ustalar katalogi",
+      "short_name": "Ustalar",
+      "description": "Ishonchli ustalarni toping",
+      "url": "/services",
+      "icons": [{ "src": "/favicon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Ish e'lonlari",
+      "short_name": "Ishlar",
+      "description": "Yangi ish toping",
+      "url": "/jobs",
+      "icons": [{ "src": "/favicon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Xabarlar",
+      "short_name": "Chat",
+      "description": "Xabarlaringizni ko'ring",
+      "url": "/chat",
+      "icons": [{ "src": "/favicon.svg", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

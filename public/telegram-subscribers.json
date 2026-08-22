@@ -1,0 +1,19 @@
+{
+  "craftsmen": [
+    {
+      "chatId": "7952376402",
+      "name": "Shamsiddin (Usta)",
+      "role": "craftsman",
+      "specialties": ["Santexnik", "Santexnika", "Elektrik", "Elektr", "Pardozlash", "Qurilish", "Mebel", "Konditsioner", "Barchasi"],
+      "updatedAt": "2026-08-21T17:15:00.000Z"
+    }
+  ],
+  "clients": [
+    {
+      "chatId": "7649687301",
+      "name": "Shamsiddin (Mijoz)",
+      "role": "client",
+      "updatedAt": "2026-08-21T17:15:00.000Z"
+    }
+  ]
+}
