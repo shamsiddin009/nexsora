@@ -3,6 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -17,14 +20,14 @@
   "dependencies": {
     "@lucide/vue": "^1.31.0",
     "@supabase/supabase-js": "^2.112.3",
+    "@vitejs/plugin-vue": "^6.0.8",
     "lucide-vue-next": "^1.0.0",
     "pinia": "^4.0.2",
+    "vite": "^8.2.0",
     "vue": "^3.5.40",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.8",
-    "pm2": "^7.0.3",
-    "vite": "^8.2.0"
+    "pm2": "^7.0.3"
   }
 }
